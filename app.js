@@ -1,47 +1,75 @@
-// Sample product data, add more or fetch from Firebase later
-const products = [
-  {
-    id: "p1",
-    name: "Snitch Sneakers",
-    price: 2999,
-    image: "product1.jpg",
-  },
-  {
-    id: "p2",
-    name: "Snitch Hoodie",
-    price: 1999,
-    image: "product2.jpg",
-  },
-  {
-    id: "p3",
-    name: "Snitch Watch",
-    price: 4999,
-    image: "product3.jpg",
-  },
-  {
-    id: "p4",
-    name: "Snitch Backpack",
-    price: 1499,
-    image: "product4.jpg",
-  },
+// Admin password
+const ADMIN_PASSWORD = "Mishty.12";
+
+// Sample offers data
+const offers = [
+  { id: 1, title: "50% OFF on Puma Shoes", desc: "Limited time offer", img: "offer1.jpg" },
+  { id: 2, title: "Buy 1 Get 1 Free", desc: "Nike exclusive deal", img: "offer2.jpg" },
+  { id: 3, title: "Free Shipping Over ₹999", desc: "On all products", img: "offer3.jpg" },
 ];
 
-function loadProducts() {
-  const productList = document.getElementById("product-list");
-  products.forEach((product) => {
-    const card = document.createElement("div");
-    card.className = "product-card";
+// Sample products data
+const products = [
+  { id: 1, name: "Puma Running Shoes", price: "₹2999", img: "prod1.jpg" },
+  { id: 2, name: "Nike Sportswear", price: "₹3999", img: "prod2.jpg" },
+  { id: 3, name: "Adidas Hoodie", price: "₹1999", img: "prod3.jpg" },
+  { id: 4, name: "Reebok T-Shirt", price: "₹899", img: "prod4.jpg" },
+];
 
-    card.innerHTML = `
-      <img src="${product.image}" alt="${product.name}" class="product-image" />
-      <h3 class="product-name">${product.name}</h3>
-      <p class="product-price">₹${product.price}</p>
-      <button onclick="alert('Added ${product.name} to cart!')" class="btn-primary">Add to Cart</button>
+// Load offers
+function loadOffers() {
+  const container = document.getElementById("offers-slider");
+  offers.forEach(offer => {
+    const div = document.createElement("div");
+    div.className = "offer-card";
+    div.innerHTML = `
+      <img src="${offer.img}" alt="${offer.title}" />
+      <h3>${offer.title}</h3>
+      <p>${offer.desc}</p>
     `;
-
-    productList.appendChild(card);
+    container.appendChild(div);
   });
 }
 
-// Call the function after DOM loads
-document.addEventListener("DOMContentLoaded", loadProducts);
+// Load products
+function loadProducts() {
+  const container = document.getElementById("product-list");
+  products.forEach(product => {
+    const div = document.createElement("div");
+    div.className = "product-card";
+    div.innerHTML = `
+      <img src="${product.img}" alt="${product.name}" />
+      <div class="product-name">${product.name}</div>
+      <div class="product-price">${product.price}</div>
+      <button class="btn-primary">Add to Cart</button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+// Admin login check - shows Admin Panel link only if correct password entered
+function checkAdmin() {
+  const adminLink = document.getElementById("admin-link");
+  let loggedIn = sessionStorage.getItem('adminLoggedIn');
+
+  if (loggedIn === "true") {
+    adminLink.style.display = "inline-block";
+  } else {
+    const password = prompt("Enter admin password to login:");
+
+    if (password === ADMIN_PASSWORD) {
+      sessionStorage.setItem('adminLoggedIn', 'true');
+      adminLink.style.display = "inline-block";
+      alert("Welcome Admin!");
+    } else {
+      adminLink.style.display = "none";
+      alert("Incorrect password. Admin panel hidden.");
+    }
+  }
+}
+
+window.onload = () => {
+  loadOffers();
+  loadProducts();
+  checkAdmin();
+};
