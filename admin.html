@@ -3,42 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin Panel - SnitchCart</title>
+  <title>SnitchCart - Shop</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <img src="logo.png" alt="SnitchCart Logo" class="logo" />
-    <nav>
-      <a href="index.html">Home</a>
-      <button id="logoutBtn" style="float:right;">Logout</button>
-    </nav>
-  </header>
 
-  <main>
-    <h1>Admin Panel</h1>
-    <form id="loginForm" style="max-width: 400px; margin-bottom: 20px;">
-      <h3>Admin Login</h3>
-      <input type="email" id="email" placeholder="Email" required /><br/><br/>
-      <input type="password" id="password" placeholder="Password" required /><br/><br/>
-      <button type="submit">Login</button>
-      <p id="loginError" style="color:red;"></p>
-    </form>
+<header>
+  <img src="logo.png" alt="SnitchCart Logo" class="logo" />
+  <nav>
+    <a href="#" id="shop-link">Shop</a>
+    <a href="admin.html" id="admin-link" style="display:none;">Admin Panel</a>
+  </nav>
+</header>
 
-    <section id="adminContent" style="display:none;">
-      <h2>Add New Product</h2>
-      <form id="productForm" style="max-width: 400px;">
-        <input type="text" id="productName" placeholder="Product Name" required /><br/><br/>
-        <input type="number" id="productPrice" placeholder="Price (₹)" required /><br/><br/>
-        <input type="url" id="productImage" placeholder="Image URL" required /><br/><br/>
-        <button type="submit">Add Product</button>
-      </form>
+<main>
+  <section id="offers-section">
+    <h2>Hot Offers</h2>
+    <div class="offers-slider" id="offers-slider"></div>
+  </section>
 
-      <h2>Existing Products</h2>
-      <div id="adminProducts"></div>
-    </section>
-  </main>
+  <section id="products-section">
+    <h2>Products</h2>
+    <div id="product-list"></div>
+  </section>
+</main>
 
-  <script type="module" src="admin.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
