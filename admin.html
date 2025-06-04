@@ -1,38 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Admin - SNITCHE C A R T</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Admin Panel - SnitchCart</title>
+<script type="module" src="admin.js"></script>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
+  input, button { padding: 10px; margin: 5px 0; width: 100%; }
+  #product-list div { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; }
+  #product-list img { max-width: 100px; }
+</style>
 </head>
 <body>
-  <h2>Admin Panel - SNITCHE C A R T</h2>
-  <input type="password" id="adminPass" placeholder="Enter Password" />
-  <button onclick="checkPass()">Login</button>
 
-  <div id="adminTools" style="display:none;">
-    <h3>Add Product</h3>
-    <form id="addProductForm">
-      <input type="text" placeholder="Name" id="name" required />
-      <input type="text" placeholder="Price" id="price" required />
-      <input type="text" placeholder="Image URL (assets/...)" id="image" required />
-      <button type="submit">Add</button>
-    </form>
-  </div>
+<h2>Admin Login</h2>
+<input id="email" type="email" placeholder="Admin Email" />
+<input id="password" type="password" placeholder="Password" />
+<button id="loginBtn">Login</button>
 
-  <script>
-    function checkPass() {
-      const pass = document.getElementById('adminPass').value;
-      if (pass === 'Mishty.12') {
-        document.getElementById('adminTools').style.display = 'block';
-      } else {
-        alert('Wrong password');
-      }
-    }
+<div id="adminPanel" style="display:none;">
+  <h3>Add Product</h3>
+  <input id="prodName" type="text" placeholder="Product Name" />
+  <input id="prodPrice" type="number" placeholder="Price" />
+  <input id="prodImg" type="text" placeholder="Image URL" />
+  <button id="addProductBtn">Add Product</button>
 
-    document.getElementById('addProductForm').onsubmit = function(e) {
-      e.preventDefault();
-      alert("This version is demo. For full edit, update products.json file on GitHub.");
-    }
-  </script>
+  <h3>Product List</h3>
+  <div id="product-list"></div>
+
+  <button id="logoutBtn">Logout</button>
+</div>
+
 </body>
 </html>
