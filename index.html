@@ -1,27 +1,34 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SnitchMart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SnitchMart - Your One Stop Shop</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-  <script src="firebaseConfig.js" defer></script>
-  <script src="script.js" defer></script>
 </head>
 <body>
+
   <header>
-    <div class="header-left">
-      <img src="logo.png" class="logo" alt="SnitchMart Logo" />
+    <div class="logo-container">
+      <img src="logo.png" alt="SnitchMart Logo" class="logo" />
       <h1>SnitchMart</h1>
     </div>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Search for products...">
-    </div>
-  </header>  <section class="hero">🔥 Big Deal Today! Flat 50% Off on Puma & Nike T-Shirts 🔥</section>  <section class="product-grid" id="productGrid">
-    <!-- Products will be loaded here -->
-  </section>  <footer>
-    &copy; 2025 SnitchMart | All rights reserved
+    <input type="search" id="search" placeholder="Search for products, brands, and more..." />
+  </header>
+
+  <section class="offer-banner">
+    <p>🔥 Limited Time Offer: Flat 20% OFF on Puma T-Shirts! Use code <strong>PUMA20</strong></p>
+  </section>
+
+  <main>
+    <div id="products" class="products-grid"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 SnitchMart. All rights reserved.</p>
   </footer>
+
+  <script src="script.js" type="module"></script>
+
 </body>
 </html>
