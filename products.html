@@ -1,0 +1,82 @@
+<!-- products.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Products - SNITCHCART</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="products.js"></script>
+  <style>
+    body {
+      background: #121212;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px #00ff99;
+    }
+    .product-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+      gap: 20px;
+    }
+    .product-card {
+      background: #222;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 0 15px #00ff99;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .product-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px #00ff99, 0 0 40px #00ffaa;
+    }
+    .product-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      box-shadow: 0 0 15px #00ff99 inset;
+    }
+    .product-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-shadow: 0 0 5px #00ff99;
+    }
+    .product-price {
+      font-size: 1rem;
+      color: #00ff99;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .product-desc {
+      font-size: 0.9rem;
+      color: #ccc;
+      min-height: 60px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 0.8rem;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+  <h1>SNITCHCART Products</h1>
+  <div class="product-list" id="product-list"></div>
+
+  <footer>
+    <p>Created by Midow Web Developer</p>
+    <p>Contact: <a href="mailto:snitch44@gmail.com" style="color:#00ff99;">snitch44@gmail.com</a></p>
+  </footer>
+</body>
+</html>
