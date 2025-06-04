@@ -1,2 +1,2 @@
-# SNITCMCART
+# SNITCHCART
 Premium e-commerce site
