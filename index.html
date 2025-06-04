@@ -1,94 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SnitchCart - Professional Store</title>
-<link rel="stylesheet" href="style.css" />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SNITCHCART</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #111;
+      color: #fff;
+    }
+
+    header {
+      background-color: #000;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header img {
+      max-width: 120px;
+      height: auto;
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+    }
+
+    nav ul {
+      display: none;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      background-color: #222;
+      position: absolute;
+      top: 60px;
+      right: 15px;
+      width: 150px;
+      border-radius: 5px;
+      z-index: 999;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      padding: 10px;
+    }
+
+    .offers-section {
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .offer-card {
+      background-color: #222;
+      border-radius: 10px;
+      padding: 10px;
+      max-width: 180px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .offer-card:hover {
+      transform: scale(1.03);
+    }
+
+    .offer-card img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .offer-card p {
+      margin: 10px 0 0;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background-color: #000;
+      font-size: 13px;
+      color: #999;
+    }
+
+    @media (max-width: 600px) {
+      .offer-card {
+        max-width: 45%;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<header class="header">
-  <div class="container">
-    <div class="logo">
-      <img src="logo.png" alt="SnitchCart Logo" />
-    </div>
+  <!-- Header -->
+  <header>
+    <img src="logo.png" alt="SnitchCart Logo" />
     <nav>
-      <ul class="nav-menu">
+      <button id="menuBtn">☰</button>
+      <ul id="menu">
         <li><a href="#">Home</a></li>
-        <li><a href="#offers">Offers</a></li>
-        <li><a href="#products">Products</a></li>
-        <li><a href="admin.html">Admin Panel</a></li>
+        <li><a href="#">Offers</a></li>
+        <li><a href="#">Contact</a></li>
       </ul>
     </nav>
-  </div>
-</header>
+  </header>
 
-<section class="hero-banner">
-  <div class="container">
-    <div class="hero-text">
-      <h1>Welcome to SnitchCart</h1>
-      <p>Your one-stop shop for the latest products & amazing offers!</p>
-      <a href="#products" class="btn-primary">Shop Now</a>
+  <!-- Offers Section -->
+  <section class="offers-section">
+    <div class="offer-card">
+      <img src="offer1.png" alt="Offer 1" />
+      <p>Flat 50% OFF on Snitch T-Shirts</p>
     </div>
-    <div class="hero-image">
-      <img src="hero-banner.jpg" alt="Hero Banner" />
+    <div class="offer-card">
+      <img src="offer2.png" alt="Offer 2" />
+      <p>BOGO: Buy 1 Get 1 Free</p>
     </div>
-  </div>
-</section>
+    <div class="offer-card">
+      <img src="offer3.png" alt="Offer 3" />
+      <p>New Sneaker Drop Just In</p>
+    </div>
+    <div class="offer-card">
+      <img src="offer4.png" alt="Offer 4" />
+      <p>Up to 60% OFF on Hoodies</p>
+    </div>
+  </section>
 
-<section id="offers" class="offers-section">
-  <div class="container">
-    <h2>🔥 Hot Offers</h2>
-    <div class="offers-slider">
-      <div class="offer-card">
-        <img src="offer1.jpg" alt="Offer 1" />
-        <div class="offer-info">
-          <h3>Flat 30% Off</h3>
-          <p>On all clothing items</p>
-        </div>
-      </div>
-      <div class="offer-card">
-        <img src="offer2.jpg" alt="Offer 2" />
-        <div class="offer-info">
-          <h3>Buy 1 Get 1 Free</h3>
-          <p>Exclusive on footwear</p>
-        </div>
-      </div>
-      <div class="offer-card">
-        <img src="offer3.jpg" alt="Offer 3" />
-        <div class="offer-info">
-          <h3>Extra 15% Cashback</h3>
-          <p>For all orders above ₹2000</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+  <!-- Footer -->
+  <footer>
+    © 2025 SNITCHCART | All rights reserved.
+  </footer>
 
-<section id="products" class="products-section">
-  <div class="container">
-    <h2>Featured Products</h2>
-    <div id="product-list" class="product-grid">
-      <!-- JS will inject product cards here -->
-    </div>
-  </div>
-</section>
-
-<footer class="footer">
-  <div class="container">
-    <p>© 2025 SnitchCart. All rights reserved.</p>
-    <div class="social-links">
-      <a href="#" aria-label="Facebook">Fb</a>
-      <a href="#" aria-label="Instagram">Ig</a>
-      <a href="#" aria-label="Twitter">Tw</a>
-    </div>
-  </div>
-</footer>
-
-<script src="firebaseConfig.js"></script>
-<script src="app.js"></script>
+  <!-- Script for Mobile Menu -->
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const menu = document.getElementById('menu');
+    menuBtn.addEventListener('click', () => {
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    });
+  </script>
 
 </body>
 </html>
