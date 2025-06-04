@@ -1,86 +1,106 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: #f2f2f2;
+  background: #f2f4f8;
+  color: #333;
 }
 
 header {
-  background-color: #0046be;
+  background: #0047ab;
   color: white;
-  padding: 20px 0;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-header .container {
   display: flex;
+  justify-content: space-between;
+  padding: 15px 20px;
   align-items: center;
-  justify-content: center;
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
   height: 40px;
-  margin-right: 15px;
+  margin-right: 10px;
+}
+
+.logo h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+nav input {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: none;
+  width: 250px;
+}
+
+.banner {
+  background: linear-gradient(90deg, #f12711, #f5af19);
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
 }
 
 main {
-  padding: 30px;
-  text-align: center;
+  padding: 20px;
 }
 
-h2 {
-  margin-bottom: 20px;
-  color: #222;
-}
-
-.products {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+.product-list {
+  display: grid;
   gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
 .product-card {
   background: white;
-  padding: 15px;
-  width: 200px;
   border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  transition: 0.2s;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  position: relative;
+  transition: 0.3s ease;
+}
+
+.product-card:hover {
+  transform: scale(1.02);
 }
 
 .product-card img {
-  max-width: 100%;
-  border-radius: 10px;
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 6px;
 }
 
 .product-card h3 {
+  margin: 10px 0 5px;
   font-size: 18px;
-  color: #333;
 }
 
 .product-card p {
-  font-size: 16px;
-  color: #007aff;
+  margin: 0;
+  font-weight: bold;
+  color: #0047ab;
 }
 
-.product-card button {
-  background-color: #0046be;
+.offer-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: crimson;
   color: white;
-  border: none;
-  padding: 10px;
-  width: 100%;
-  margin-top: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.product-card button:hover {
-  background-color: #003399;
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 4px;
 }
 
 footer {
+  background: #0047ab;
+  color: white;
   text-align: center;
-  padding: 20px;
-  background: #ddd;
-  color: #555;
+  padding: 15px;
+  font-size: 14px;
 }
