@@ -3,183 +3,151 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SnitchCart - Professional Ecommerce</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-
+  <title>SNITCHCART | Puma Vibe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Reset & base */
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
     body {
-      font-family: 'Poppins', sans-serif;
-      background: #fff;
-      color: #333;
+      font-family: 'Urbanist', sans-serif;
+      background: #f9f9f9;
+      color: #111;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
-    /* Header */
     header {
-      background: #0a3d62;
+      background: #000;
       color: #fff;
-      padding: 15px 30px;
+      padding: 20px 40px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      align-items: center;
+      letter-spacing: 1px;
     }
     header h1 {
-      font-weight: 600;
-      font-size: 1.9rem;
-      letter-spacing: 3px;
-      cursor: default;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
     }
     nav a {
       color: #fff;
-      margin-left: 25px;
+      margin-left: 30px;
       text-decoration: none;
       font-weight: 500;
-      font-size: 1.1rem;
-      transition: color 0.3s ease;
+      font-size: 1rem;
+      transition: 0.3s;
     }
     nav a:hover {
-      color: #f39c12;
+      color: red;
     }
 
-    /* Offer Banner */
-    .offer-banner {
-      background: #f39c12;
+    .banner {
+      background: red;
       color: #fff;
       text-align: center;
-      padding: 14px 0;
-      font-weight: 700;
-      font-size: 1.3rem;
-      box-shadow: 0 0 20px #f39c12;
+      padding: 15px;
+      font-weight: 600;
       letter-spacing: 1px;
-      margin-bottom: 25px;
+      font-size: 1.2rem;
     }
 
-    /* Products Grid */
     .products-container {
       max-width: 1200px;
-      margin: 0 auto 60px auto;
+      margin: 40px auto;
       padding: 0 20px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 28px;
+      gap: 30px;
     }
 
-    /* Product Card */
     .product-card {
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      overflow: hidden;
       background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       display: flex;
       flex-direction: column;
       cursor: pointer;
     }
     .product-card:hover {
-      transform: translateY(-7px);
-      box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+      transform: scale(1.03);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.15);
     }
     .product-img {
       width: 100%;
-      height: 210px;
-      object-fit: contain;
-      background: #fafafa;
-      border-bottom: 1px solid #eee;
-      padding: 12px;
+      height: 220px;
+      object-fit: cover;
+      transition: 0.3s ease;
     }
+
     .product-info {
-      padding: 18px 20px;
-      flex-grow: 1;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
     }
+
     .product-name {
+      font-size: 1.1rem;
       font-weight: 600;
-      font-size: 1.15rem;
-      color: #222;
       margin-bottom: 10px;
       min-height: 48px;
     }
+
     .product-price {
+      font-size: 1.3rem;
       font-weight: 700;
-      font-size: 1.2rem;
-      color: #f39c12;
-      margin-bottom: 12px;
+      color: red;
+      margin-bottom: 8px;
     }
+
     .product-starts {
-      font-size: 0.9rem;
-      color: #555;
-      margin-bottom: 12px;
+      font-size: 0.95rem;
+      color: #666;
+      margin-bottom: 15px;
     }
+
     .btn-add {
-      background: #0a3d62;
+      background: #000;
       color: #fff;
+      padding: 12px;
       border: none;
-      border-radius: 6px;
-      padding: 10px 0;
+      border-radius: 8px;
       font-weight: 600;
       font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      user-select: none;
-    }
-    .btn-add:hover {
-      background: #f39c12;
+      transition: background 0.3s;
     }
 
-    /* Footer */
-    footer {
-      background: #0a3d62;
+    .btn-add:hover {
+      background: red;
       color: #fff;
-      padding: 15px 30px;
+    }
+
+    footer {
+      background: #000;
+      color: #fff;
       text-align: center;
-      font-size: 0.95rem;
-      letter-spacing: 1px;
+      padding: 18px;
       margin-top: auto;
-      box-shadow: 0 -2px 5px rgba(0,0,0,0.15);
+      font-size: 0.95rem;
     }
     footer a {
-      color: #f39c12;
+      color: red;
       text-decoration: none;
-      font-weight: 600;
-    }
-    footer a:hover {
-      text-decoration: underline;
     }
 
-    /* Responsive */
     @media (max-width: 600px) {
       header h1 {
         font-size: 1.5rem;
       }
       nav a {
-        font-size: 1rem;
-        margin-left: 15px;
-      }
-      .products-container {
-        gap: 18px;
-      }
-      .product-card {
-        flex-direction: column;
-      }
-      .product-img {
-        height: 180px;
+        margin-left: 16px;
+        font-size: 0.95rem;
       }
     }
   </style>
@@ -192,97 +160,71 @@
       <a href="#products">Products</a>
       <a href="#offers">Offers</a>
       <a href="#contact">Contact</a>
-      <a href="#admin" id="admin-link" style="display:none;">Admin Panel</a>
     </nav>
   </header>
 
-  <div class="offer-banner" id="offers">
-    🔥 Special Offer: Flat 10% off on all products! Prices starting at ₹999 only! 🔥
+  <div class="banner" id="offers">
+    🛍 Flat 10% Off on Everything - Limited Time Puma Drop 🛍
   </div>
 
   <main>
     <section class="products-container" id="products">
-      <!-- Product cards will be inserted here by JavaScript -->
+      <!-- Products rendered by JavaScript -->
     </section>
   </main>
 
   <footer id="contact">
-    Contact us: <a href="mailto:snitch44@gmail.com">snitch44@gmail.com</a><br/>
-    Created by Midow Web Developer
+    Contact: <a href="mailto:snitch44@gmail.com">snitch44@gmail.com</a> | Designed by Midow
   </footer>
 
   <script>
-    // Sample products data
     const products = [
       {
         id: 1,
-        name: "Puma Running Shoes",
-        price: 2499,
-        img: "https://images.unsplash.com/photo-1528701800489-34e8a8e21456?auto=format&fit=crop&w=600&q=80"
+        name: "Puma Black Sneakers",
+        price: 2999,
+        img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80"
       },
       {
         id: 2,
-        name: "Rolex Watch",
-        price: 45000,
-        img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80"
+        name: "Puma Hoodie (Red Edition)",
+        price: 1999,
+        img: "https://images.unsplash.com/photo-1593032465171-8c9b8fcdcdbe?auto=format&fit=crop&w=600&q=80"
       },
       {
         id: 3,
-        name: "Amazon Echo Dot",
-        price: 3999,
-        img: "https://images.unsplash.com/photo-1517059224940-d4af9eec41e6?auto=format&fit=crop&w=600&q=80"
+        name: "Puma Smart Backpack",
+        price: 1599,
+        img: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=600&q=80"
       },
       {
         id: 4,
-        name: "Alibaba Smart Speaker",
-        price: 1999,
-        img: "https://images.unsplash.com/photo-1589927986089-35812388d1f4?auto=format&fit=crop&w=600&q=80"
-      },
-      {
-        id: 5,
-        name: "Wireless Earbuds",
-        price: 3499,
-        img: "https://images.unsplash.com/photo-1512499617640-c2f999858e3e?auto=format&fit=crop&w=600&q=80"
-      },
-      {
-        id: 6,
-        name: "Smartphone Cover",
-        price: 999,
-        img: "https://images.unsplash.com/photo-1567016540522-cb09c2d17e8b?auto=format&fit=crop&w=600&q=80"
+        name: "Limited Edition Sneakers",
+        price: 4499,
+        img: "https://images.unsplash.com/photo-1528701800489-34e8a8e21456?auto=format&fit=crop&w=600&q=80"
       }
     ];
 
-    // Function to render products
     function renderProducts() {
       const container = document.querySelector('.products-container');
-      container.innerHTML = ""; // Clear old
-
+      container.innerHTML = "";
       products.forEach(product => {
         const card = document.createElement('div');
         card.className = 'product-card';
-
         card.innerHTML = `
           <img src="${product.img}" alt="${product.name}" class="product-img" />
           <div class="product-info">
             <div class="product-name">${product.name}</div>
-            <div class="product-price">₹${product.price.toLocaleString()}</div>
+            <div class="product-price">₹${product.price}</div>
             <div class="product-starts">Starts at ₹999</div>
-            <button class="btn-add" onclick="alert('Add to cart clicked for ${product.name}')">Add to Cart</button>
+            <button class="btn-add">Add to Cart</button>
           </div>
         `;
-
         container.appendChild(card);
       });
     }
 
-    // Call renderProducts on page load
     window.onload = renderProducts;
-
-    // Admin link toggle (example, hide admin link by default)
-    // You can later add login/authentication to show/hide admin link
-    const adminLink = document.getElementById('admin-link');
-    // For demo: uncomment below to show admin link
-    // adminLink.style.display = 'inline-block';
   </script>
 
 </body>
