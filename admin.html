@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin | SnitchMart</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <h2>SnitchMart Admin Panel</h2>
+  <form id="productForm">
+    <input type="text" id="name" placeholder="Product Name" required />
+    <input type="number" id="price" placeholder="Price" required />
+    <input type="text" id="image" placeholder="Image URL" required />
+    <button type="submit">Add Product</button>
+  </form>
+
+  <script type="module">
+    import { db } from './firebaseConfig.js';
+    import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+    const form = document.getElementById("productForm");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const price = parseFloat(document.getElementById("price").value);
+      const image = document.getElementById("image").value;
+
+      try {
+        await addDoc(collection(db, "products"), { name, price, image });
+        alert("Product added!");
+        form.reset();
+      } catch (err) {
+        alert("Error adding product!");
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
