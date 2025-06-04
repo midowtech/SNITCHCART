@@ -3,67 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SnitchMart - Online Store</title>
+  <title>SnitchMart</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" type="image/png" href="logo.png" />
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+  <link rel="icon" href="logo.png" />
 </head>
 <body>
   <header>
-    <div class="container">
-      <img src="logo.png" alt="SnitchMart Logo" class="logo" />
+    <div class="logo">
+      <img src="logo.png" alt="SnitchMart Logo" />
       <h1>SnitchMart</h1>
     </div>
+    <nav>
+      <input type="text" placeholder="Search for products..." id="searchInput" />
+    </nav>
   </header>
 
+  <section class="banner">
+    <h2>🔥 Mega Deals on Top Brands! Limited Time Offers! 🔥</h2>
+  </section>
+
   <main>
-    <h2>Top Picks For You</h2>
-    <div class="products" id="product-list">
-      <p>Loading products...</p>
-    </div>
+    <section class="product-list" id="productList">
+      <p class="loading">Loading products...</p>
+    </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 SnitchMart. All rights reserved.</p>
+    <p>© 2025 SnitchMart • Powered by MidowTech</p>
   </footer>
 
-  <script>
-    // Firebase Config
-    const firebaseConfig = {
-      apiKey: "AIzaSyD-QxJDh8QU2aI8c2kpfTZBNemyvmjq1LE",
-      authDomain: "snitchmart-a8073.firebaseapp.com",
-      projectId: "snitchmart-a8073",
-      storageBucket: "snitchmart-a8073.appspot.com",
-      messagingSenderId: "381112072944",
-      appId: "1:381112072944:web:36f7e3269a847a942da035"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    const productList = document.getElementById("product-list");
-    productList.innerHTML = '';
-
-    db.collection("products").get().then((snapshot) => {
-      if (snapshot.empty) {
-        productList.innerHTML = "<p>No products found</p>";
-      } else {
-        snapshot.forEach(doc => {
-          const data = doc.data();
-          const card = `
-            <div class="product-card">
-              <img src="${data.image}" alt="${data.name}" />
-              <h3>${data.name}</h3>
-              <p>₹${data.price}</p>
-              <button>Add to Cart</button>
-            </div>
-          `;
-          productList.innerHTML += card;
-        });
-      }
-    }).catch((error) => {
-      productList.innerHTML = `<p>Error loading products: ${error.message}</p>`;
-    });
-  </script>
+  <script type="module" src="firebaseConfig.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
