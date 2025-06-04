@@ -68,4 +68,46 @@ function toggleAdminPanel() {
   if (adminPanel.style.display === "none" || adminPanel.style.display === "") {
     adminPanel.style.display = "block";
   } else {
-    adminPanel.style.display =
+    adminPanel.style.display ="none";
+  }
+}
+
+// Add product from admin panel to Firestore
+function addProduct() {
+  const name = document.getElementById('admin-product-name').value.trim();
+  const price = parseFloat(document.getElementById('admin-product-price').value);
+  const image = document.getElementById('admin-product-image').value.trim();
+
+  if (!name || !price || !image) {
+    alert("Please fill all product fields correctly.");
+    return;
+  }
+
+  db.collection("products").add({
+    name: name,
+    price: price,
+    image: image
+  })
+  .then(() => {
+    alert("Product added successfully!");
+    // Clear inputs
+    document.getElementById('admin-product-name').value = "";
+    document.getElementById('admin-product-price').value = "";
+    document.getElementById('admin-product-image').value = "";
+    // Reload products list
+    loadProducts();
+  })
+  .catch(error => {
+    console.error("Error adding product: ", error);
+    alert("Failed to add product. Try again.");
+  });
+}
+
+// Dummy add to cart button functionality (can be expanded)
+function addToCart(productId) {
+  alert("Product added to cart (ID: " + productId + ")");
+  // You can extend this to implement full cart functionality later
+}
+
+// Load products on page load
+window.onload = loadProducts;
