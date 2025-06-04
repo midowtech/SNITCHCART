@@ -1,212 +1,232 @@
-/* Reset and Font */
+/* Reset */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  margin: 0; padding: 0; box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
 }
 
 body {
-  background-color: #111;
-  color: #fff;
-  line-height: 1.5;
-  overflow-x: hidden;
+  background: #fff;
+  color: #222;
+  line-height: 1.6;
 }
 
-/* Containers */
+/* Container */
 .container {
-  width: 92%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: auto;
+  padding: 0 20px;
 }
 
 /* Header */
 .header {
-  background: #1a1a1a;
-  padding: 12px 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  background: #111;
+  padding: 15px 0;
   position: sticky;
   top: 0;
   z-index: 999;
 }
 
-.header-container {
+.header .container {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.logo {
-  display: flex;
   align-items: center;
-  gap: 10px;
 }
 
 .logo img {
-  width: 36px;
-  height: 36px;
-  object-fit: contain;
+  height: 50px;
 }
 
-.logo h1 {
-  font-size: 22px;
-  color: #fff;
-  font-weight: 600;
-}
-
-.search-bar {
+.nav-menu {
+  list-style: none;
   display: flex;
-  flex-grow: 1;
-  margin: 10px;
+  gap: 25px;
 }
 
-.search-bar input {
-  flex-grow: 1;
-  padding: 10px 14px;
-  border-radius: 30px 0 0 30px;
-  border: none;
-  font-size: 15px;
-  outline: none;
-  background: #222;
+.nav-menu li a {
   color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.3s ease;
 }
 
-.search-bar button {
-  padding: 0 18px;
-  border: none;
-  background: #e91e63;
+.nav-menu li a:hover {
+  color: #ff4d4d;
+}
+
+/* Hero Banner */
+.hero-banner {
+  background: #f5f5f5;
+  padding: 60px 0;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.hero-text {
+  flex: 1;
+}
+
+.hero-text h1 {
+  font-size: 2.8rem;
+  margin-bottom: 15px;
+  color: #111;
+}
+
+.hero-text p {
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+  color: #555;
+}
+
+.btn-primary {
+  display: inline-block;
+  background: #ff4d4d;
   color: white;
-  font-size: 18px;
-  border-radius: 0 30px 30px 0;
-  cursor: pointer;
+  padding: 12px 28px;
+  font-weight: 700;
+  border-radius: 4px;
+  text-decoration: none;
   transition: background 0.3s ease;
 }
 
-.search-bar button:hover {
-  background: #c2185b;
+.btn-primary:hover {
+  background: #e04343;
 }
 
-.cart-icon {
-  font-size: 22px;
-  position: relative;
-  cursor: pointer;
-  color: #fff;
+.hero-image img {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  flex: 1;
 }
 
-#cartCount {
-  background: #ff1744;
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-  position: absolute;
-  top: -8px;
-  right: -10px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Offer Banner */
-.offer-banner {
-  background: linear-gradient(to right, #e91e63, #ff1744);
-  color: white;
+/* Offers Section */
+.offers-section {
+  background: #fff6f6;
+  padding: 40px 0;
   text-align: center;
-  padding: 10px 0;
-  font-weight: 500;
-  font-size: 15px;
-  letter-spacing: 0.03em;
 }
 
-/* Product Grid */
-.products-container {
-  margin: 25px auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+.offers-section h2 {
+  font-size: 2rem;
+  color: #d33;
+  margin-bottom: 30px;
+}
+
+.offers-slider {
+  display: flex;
   gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scrollbar-width: none; /* Firefox */
 }
 
-.product-card {
-  background: #1c1c1c;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-  transition: 0.3s ease;
-  display: flex;
-  flex-direction: column;
+.offers-slider::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.offer-card {
+  min-width: 280px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+  padding: 15px;
+  flex-shrink: 0;
   cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
-.product-card:hover {
-  transform: scale(1.03);
+.offer-card:hover {
+  transform: scale(1.05);
 }
 
-.product-card img {
+.offer-card img {
   width: 100%;
-  height: 160px;
-  object-fit: contain;
-  background: #2a2a2a;
-}
-
-.product-info {
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
-}
-
-.product-info h3 {
-  font-size: 16px;
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: 8px;
-}
-
-.product-price {
-  font-size: 16px;
-  color: #e91e63;
-  font-weight: bold;
+  border-radius: 6px;
   margin-bottom: 12px;
 }
 
-.btn-add {
-  background-color: #e91e63;
-  color: white;
-  padding: 10px;
-  border-radius: 6px;
-  border: none;
+.offer-info h3 {
+  color: #b22222;
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+}
+
+.offer-info p {
+  color: #555;
+  font-size: 1rem;
+}
+
+/* Products Section */
+.products-section {
+  background: #fff;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.products-section h2 {
+  font-size: 2rem;
+  margin-bottom: 25px;
+  color: #111;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+  gap: 25px;
+  padding: 0 10px;
+}
+
+/* Product Card */
+.product-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  background: #fff;
   cursor: pointer;
-  font-weight: 500;
-  transition: background 0.3s ease;
+  transition: box-shadow 0.3s ease;
 }
 
-.btn-add:hover {
-  background-color: #c2185b;
+.product-card:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-/* Responsive Tweaks */
-@media (max-width: 600px) {
-  .search-bar {
-    width: 100%;
-    margin-top: 10px;
-  }
+.product-image {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
 
-  .header-container {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.product-name {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: #222;
+}
 
-  .product-card img {
-    height: 140px;
-  }
+.product-price {
+  color: #ff4d4d;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
 
-  .products-container {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  }
+/* Footer */
+.footer {
+  background: #111;
+  color: #aaa;
+  padding: 20px 0;
+  text-align: center;
+}
 
-  .logo h1 {
-    font-size: 20px;
-  }
-    }
+.social-links a {
+  margin: 0 10px;
+  color: #aaa;
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+  color
