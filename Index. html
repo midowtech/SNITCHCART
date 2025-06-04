@@ -1,49 +1,235 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SnitchCart Demo</title>
+  <title>SnitchCart - Professional Demo</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
-    h1 { color: #333; }
-    .product { background: white; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
-    button { margin-left: 10px; padding: 5px 10px; cursor: pointer; }
-    #cart { margin-top: 30px; background: white; padding: 15px; border-radius: 5px; }
-    #cart ul { list-style: none; padding: 0; }
-    #cart li { margin-bottom: 5px; }
+    /* Reset & Base */
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: #f0f2f5;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    header {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2.8rem;
+      color: #2c3e50;
+      margin-bottom: 8px;
+      letter-spacing: 2px;
+    }
+    header p {
+      color: #7f8c8d;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+
+    /* Products Grid */
+    #products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+      gap: 25px;
+      width: 100%;
+      max-width: 1000px;
+      margin-bottom: 50px;
+    }
+
+    .product {
+      background: #fff;
+      border-radius: 12px;
+      padding: 25px 20px;
+      box-shadow: 0 4px 15px rgb(0 0 0 / 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease;
+    }
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgb(0 0 0 / 0.15);
+    }
+    .product h2 {
+      font-size: 1.5rem;
+      color: #34495e;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .product .price {
+      font-size: 1.25rem;
+      color: #27ae60;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    .product button {
+      background-color: #27ae60;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 18px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 5px 12px rgb(39 174 96 / 0.4);
+    }
+    .product button:hover {
+      background-color: #219150;
+    }
+
+    /* Cart Section */
+    #cart {
+      background: #fff;
+      width: 100%;
+      max-width: 600px;
+      border-radius: 12px;
+      padding: 25px 30px;
+      box-shadow: 0 4px 18px rgb(0 0 0 / 0.1);
+    }
+    #cart h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #2c3e50;
+      border-bottom: 2px solid #27ae60;
+      padding-bottom: 8px;
+    }
+    #cart ul {
+      list-style: none;
+      max-height: 220px;
+      overflow-y: auto;
+      margin-bottom: 25px;
+      padding-right: 8px;
+    }
+    #cart ul::-webkit-scrollbar {
+      width: 7px;
+    }
+    #cart ul::-webkit-scrollbar-thumb {
+      background: #27ae60;
+      border-radius: 10px;
+    }
+    #cart li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #eee;
+      color: #34495e;
+    }
+    #cart li button {
+      background: #e74c3c;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 12px rgb(231 76 60 / 0.4);
+    }
+    #cart li button:hover {
+      background-color: #c0392b;
+    }
+
+    #total {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #27ae60;
+      margin-bottom: 25px;
+      display: block;
+      text-align: right;
+    }
+
+    #checkout-btn {
+      width: 100%;
+      padding: 14px 0;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: white;
+      background-color: #2980b9;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 7px 18px rgb(41 128 185 / 0.5);
+      transition: background-color 0.3s ease;
+    }
+    #checkout-btn:disabled {
+      background-color: #95a5a6;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    #checkout-btn:not(:disabled):hover {
+      background-color: #1c5980;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      body {
+        padding: 20px 10px;
+      }
+      #products {
+        grid-template-columns: 1fr;
+      }
+      #cart {
+        max-width: 100%;
+        padding: 20px;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <h1>SnitchCart Demo - Simple Shopping</h1>
+<header>
+  <h1>SnitchCart</h1>
+  <p>Professional Shopping Cart Demo</p>
+</header>
 
-  <div id="products">
+<main>
+  <section id="products">
     <div class="product">
-      Mobile Phone - ₹15000
+      <h2>Mobile Phone</h2>
+      <div class="price">₹15,000</div>
       <button onclick="addToCart('Mobile Phone', 15000)">Add to Cart</button>
     </div>
     <div class="product">
-      Laptop - ₹55000
+      <h2>Laptop</h2>
+      <div class="price">₹55,000</div>
       <button onclick="addToCart('Laptop', 55000)">Add to Cart</button>
     </div>
     <div class="product">
-      Headphones - ₹2000
+      <h2>Headphones</h2>
+      <div class="price">₹2,000</div>
       <button onclick="addToCart('Headphones', 2000)">Add to Cart</button>
     </div>
     <div class="product">
-      Smart Watch - ₹8000
+      <h2>Smart Watch</h2>
+      <div class="price">₹8,000</div>
       <button onclick="addToCart('Smart Watch', 8000)">Add to Cart</button>
     </div>
-  </div>
+  </section>
 
-  <div id="cart">
+  <section id="cart">
     <h2>Your Cart</h2>
     <ul id="cart-items"></ul>
-    <strong>Total: ₹<span id="total">0</span></strong>
-    <br /><br />
-    <button onclick="checkout()" id="checkout-btn" disabled>Checkout</button>
-  </div>
+    <strong id="total">Total: ₹0</strong>
+    <button id="checkout-btn" onclick="checkout()" disabled>Checkout</button>
+  </section>
+</main>
 
 <script>
   const cart = [];
@@ -66,7 +252,7 @@
     cart.forEach((item, idx) => {
       total += item.price;
       const li = document.createElement('li');
-      li.textContent = `${item.name} - ₹${item.price}`;
+      li.textContent = `${item.name} - ₹${item.price.toLocaleString()}`;
       const btn = document.createElement('button');
       btn.textContent = 'Remove';
       btn.onclick = () => removeFromCart(idx);
@@ -74,102 +260,12 @@
       cartItems.appendChild(li);
     });
 
-    document.getElementById('total').textContent = total;
+    document.getElementById('total').textContent = `Total: ₹${total.toLocaleString()}`;
     document.getElementById('checkout-btn').disabled = cart.length === 0;
   }
 
   function checkout() {
-    alert('Checkout successful! Total amount: ₹' + cart.reduce((a,b) => a + b.price, 0));
-    cart.length = 0;
-    renderCart();
-  }
-
-  renderCart();
-</script>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SnitchCart Demo</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
-    h1 { color: #333; }
-    .product { background: white; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
-    button { margin-left: 10px; padding: 5px 10px; cursor: pointer; }
-    #cart { margin-top: 30px; background: white; padding: 15px; border-radius: 5px; }
-    #cart ul { list-style: none; padding: 0; }
-    #cart li { margin-bottom: 5px; }
-  </style>
-</head>
-<body>
-
-  <h1>SnitchCart Demo - Simple Shopping</h1>
-
-  <div id="products">
-    <div class="product">
-      Mobile Phone - ₹15000
-      <button onclick="addToCart('Mobile Phone', 15000)">Add to Cart</button>
-    </div>
-    <div class="product">
-      Laptop - ₹55000
-      <button onclick="addToCart('Laptop', 55000)">Add to Cart</button>
-    </div>
-    <div class="product">
-      Headphones - ₹2000
-      <button onclick="addToCart('Headphones', 2000)">Add to Cart</button>
-    </div>
-    <div class="product">
-      Smart Watch - ₹8000
-      <button onclick="addToCart('Smart Watch', 8000)">Add to Cart</button>
-    </div>
-  </div>
-
-  <div id="cart">
-    <h2>Your Cart</h2>
-    <ul id="cart-items"></ul>
-    <strong>Total: ₹<span id="total">0</span></strong>
-    <br /><br />
-    <button onclick="checkout()" id="checkout-btn" disabled>Checkout</button>
-  </div>
-
-<script>
-  const cart = [];
-
-  function addToCart(name, price) {
-    cart.push({ name, price });
-    renderCart();
-  }
-
-  function removeFromCart(index) {
-    cart.splice(index, 1);
-    renderCart();
-  }
-
-  function renderCart() {
-    const cartItems = document.getElementById('cart-items');
-    cartItems.innerHTML = '';
-    let total = 0;
-
-    cart.forEach((item, idx) => {
-      total += item.price;
-      const li = document.createElement('li');
-      li.textContent = `${item.name} - ₹${item.price}`;
-      const btn = document.createElement('button');
-      btn.textContent = 'Remove';
-      btn.onclick = () => removeFromCart(idx);
-      li.appendChild(btn);
-      cartItems.appendChild(li);
-    });
-
-    document.getElementById('total').textContent = total;
-    document.getElementById('checkout-btn').disabled = cart.length === 0;
-  }
-
-  function checkout() {
-    alert('Checkout successful! Total amount: ₹' + cart.reduce((a,b) => a + b.price, 0));
+    alert(`Checkout successful! Total amount: ₹${cart.reduce((a, b) => a + b.price, 0).toLocaleString()}`);
     cart.length = 0;
     renderCart();
   }
