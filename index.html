@@ -8,8 +8,10 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="container">
-    <h1>SnitchCart</h1>
+  <header class="container" style="display:flex; align-items:center; border-bottom: 2px solid #00ff99; padding-bottom: 20px;">
+    <!-- Logo -->
+    <img src="https://i.imgur.com/3sCvhD0.png" alt="SnitchCart Logo" style="height:50px; margin-right:15px; filter: drop-shadow(0 0 5px #00ff99);" />
+    <h1 style="flex-grow:1; text-shadow: 0 0 15px #00ff99;">SnitchCart</h1>
     <nav>
       <a href="products.html">Products</a>
       <a href="admin.html">Admin Panel</a>
@@ -17,35 +19,37 @@
     </nav>
   </header>
 
-  <section class="hero container">
+  <section class="hero container" style="margin: 40px 0; padding: 40px 20px; background: linear-gradient(135deg, #004d40, #00ff99); border-radius: 15px; box-shadow: 0 0 30px #00ff99;">
     <h2>Welcome to SnitchCart</h2>
     <p>Your one-stop shop for premium products. Inspired by Puma, Rolex, Amazon & Alibaba.</p>
   </section>
 
-  <div class="offers container">
+  <!-- Offer Poster -->
+  <div class="container" style="text-align:center; margin: 30px 0;">
+    <img src="https://i.imgur.com/FvTJ5eX.png" alt="Special Offer Poster" style="max-width: 100%; border-radius: 10px; box-shadow: 0 0 20px #00ff99;" />
+  </div>
+
+  <div class="offers container" style="background: #00332d; padding: 10px 15px; margin-bottom: 30px; border-radius: 8px; color: #00ff99; font-weight: 700; text-align: center; box-shadow: 0 0 10px #00ff99 inset;">
     <p>🎉 Special Offer: Products start at ₹999! Maximum price ₹45,000.</p>
   </div>
 
   <section class="container">
-    <h2 style="text-align:center; margin-bottom: 25px; text-shadow: 0 0 10px #00ff99;">
-      Featured Products
-    </h2>
-    <div id="featured-products" style="display:flex;gap:20px;justify-content:center;flex-wrap: wrap;">
-      <!-- Example featured cards -->
+    <h2 style="text-align:center; margin-bottom: 25px; text-shadow: 0 0 10px #00ff99;">Featured Products</h2>
+    <div id="featured-products" style="display:flex; gap:20px; justify-content:center; flex-wrap: wrap;">
       <div style="background:#222; padding:15px; border-radius:10px; width: 250px; box-shadow: 0 0 15px #00ff99;">
-        <img src="https://via.placeholder.com/250x180" alt="Product 1" style="width:100%; border-radius:8px; margin-bottom:10px; box-shadow: inset 0 0 15px #00ff99;">
+        <img src="https://via.placeholder.com/250x180" alt="Product 1" style="width:100%; border-radius:8px; margin-bottom:10px; box-shadow: inset 0 0 15px #00ff99;" />
         <div style="font-weight:700; color:#00ff99; font-size:1.1rem;">Premium Watch</div>
         <div style="font-weight:600; margin-top:5px;">₹25,999</div>
       </div>
       <div style="background:#222; padding:15px; border-radius:10px; width: 250px; box-shadow: 0 0 15px #00ff99;">
-        <img src="https://via.placeholder.com/250x180" alt="Product 2" style="width:100%; border-radius:8px; margin-bottom:10px; box-shadow: inset 0 0 15px #00ff99;">
+        <img src="https://via.placeholder.com/250x180" alt="Product 2" style="width:100%; border-radius:8px; margin-bottom:10px; box-shadow: inset 0 0 15px #00ff99;" />
         <div style="font-weight:700; color:#00ff99; font-size:1.1rem;">Sport Shoes</div>
         <div style="font-weight:600; margin-top:5px;">₹3,499</div>
       </div>
     </div>
   </section>
 
-  <footer>
+  <footer style="text-align:center; margin-top:50px; font-size:0.9rem; color:#444; text-shadow: 0 0 5px #00ff99;">
     <p>Created by Midow Web Developer</p>
     <p>Contact: <a href="mailto:snitch44@gmail.com" style="color:#00ff99;">snitch44@gmail.com</a></p>
   </footer>
