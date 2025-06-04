@@ -3,257 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Snitchcart Mart</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0; padding: 0;
-      background: #f5f5f5;
-    }
-    header {
-      background: #222;
-      color: white;
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .logo {
-      font-weight: bold;
-      font-size: 1.5em;
-    }
-    nav input[type="text"] {
-      padding: 8px;
-      width: 200px;
-      border-radius: 4px;
-      border: none;
-    }
-    nav button {
-      padding: 8px 12px;
-      margin-left: 10px;
-      cursor: pointer;
-      border: none;
-      border-radius: 4px;
-      background-color: #4CAF50;
-      color: white;
-      font-weight: bold;
-    }
-    .offers {
-      background: #ffcc00;
-      text-align: center;
-      padding: 10px;
-      font-weight: bold;
-      font-size: 1.2em;
-    }
-    .product-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 20px;
-      gap: 15px;
-    }
-    .product {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #ccc;
-      width: 200px;
-      text-align: center;
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .product img {
-      max-width: 100%;
-      height: 150px;
-      object-fit: contain;
-      margin-bottom: 10px;
-    }
-    .product h3 {
-      margin: 10px 0 5px 0;
-    }
-    .product p {
-      margin: 0 0 10px 0;
-      font-weight: bold;
-      color: #333;
-    }
-    .product button {
-      padding: 8px;
-      border: none;
-      border-radius: 4px;
-      background-color: #2196F3;
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    #admin-panel {
-      background: #eee;
-      padding: 20px;
-      max-width: 400px;
-      margin: 20px auto;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #ccc;
-      display: none;
-    }
-    #admin-panel input {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-    #admin-panel button {
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px;
-      border: none;
-      width: 100%;
-      font-weight: bold;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: #222;
-      color: white;
-      margin-top: 30px;
-    }
-  </style>
+  <title>Snitchmart Shop</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <header>
+    <div class="logo">SNITCHMART</div>
+    <nav>
+      <input type="text" id="search-input" placeholder="Search products..." />
+      <button id="login-btn">Login</button>
+      <button id="logout-btn" style="display:none;">Logout</button>
+      <button id="cart-btn">Cart (<span id="cart-count">0</span>)</button>
+      <button id="admin-toggle-btn" style="display:none;">Admin Panel</button>
+    </nav>
+  </header>
 
-<header>
-  <div class="logo">SNITCHCART MART</div>
-  <nav>
-    <input type="text" id="search-input" placeholder="Search products..." />
-    <button id="admin-toggle-btn">Admin Panel</button>
-  </nav>
-</header>
+  <div class="offers">Get 10% off on your first purchase!</div>
 
-<div class="offers">🔥 Special Offers Available! 🔥</div>
+  <div id="product-grid" class="product-grid"></div>
 
-<section id="product-grid" class="product-grid"></section>
+  <!-- Admin Panel -->
+  <div id="admin-panel" style="display:none;">
+    <h2>Admin Panel</h2>
+    <input type="text" id="admin-product-name" placeholder="Product Name" />
+    <input type="number" id="admin-product-price" placeholder="Price" />
+    <input type="text" id="admin-product-image" placeholder="Image URL" />
+    <button id="add-product-btn">Add Product</button>
+  </div>
 
-<section id="admin-panel">
-  <h2>Add Product</h2>
-  <input type="text" id="admin-product-name" placeholder="Product Name" />
-  <input type="number" id="admin-product-price" placeholder="Price (₹)" />
-  <input type="text" id="admin-product-image" placeholder="Image URL" />
-  <button id="add-product-btn">Add Product</button>
-</section>
+  <!-- Login Modal -->
+  <div id="login-modal" style="display:none;">
+    <div class="modal-content">
+      <h2>Login / Signup</h2>
+      <input type="email" id="email-input" placeholder="Email" />
+      <input type="password" id="password-input" placeholder="Password" />
+      <button id="login-submit-btn">Login</button>
+      <button id="signup-submit-btn">Signup</button>
+      <button id="login-close-btn">Close</button>
+    </div>
+  </div>
 
-<footer>© 2025 Snitchcart Mart</footer>
+  <!-- Cart Modal -->
+  <div id="cart-modal" style="display:none;">
+    <div class="modal-content">
+      <h2>Your Cart</h2>
+      <div id="cart-items"></div>
+      <button id="checkout-btn">Checkout</button>
+      <button id="cart-close-btn">Close</button>
+    </div>
+  </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-  import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyD-QxJDh8QU2aI8c2kpfTZBNemyvmjq1LE",
-    authDomain: "snitchmart-a8073.firebaseapp.com",
-    projectId: "snitchmart-a8073",
-    storageBucket: "snitchmart-a8073.appspot.com",
-    messagingSenderId: "381112072944",
-    appId: "1:381112072944:web:36f7e3269a847a942da035",
-    measurementId: "G-Y4LS8V8SLL"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  const productGrid = document.getElementById('product-grid');
-  const searchInput = document.getElementById('search-input');
-  const adminPanel = document.getElementById('admin-panel');
-  const adminToggleBtn = document.getElementById('admin-toggle-btn');
-  const addProductBtn = document.getElementById('add-product-btn');
-
-  // Hide admin panel by default
-  adminPanel.style.display = 'none';
-
-  // Toggle admin panel on button click
-  adminToggleBtn.addEventListener('click', () => {
-    if(adminPanel.style.display === 'block'){
-      adminPanel.style.display = 'none';
-    } else {
-      adminPanel.style.display = 'block';
-    }
-  });
-
-  // Load and display products from Firestore
-  async function loadProducts(filter = "") {
-    productGrid.innerHTML = "Loading...";
-    const productsCol = collection(db, 'products');
-    const productSnapshot = await getDocs(productsCol);
-    let products = productSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-    if(filter.trim() !== ""){
-      products = products.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()));
-    }
-
-    if(products.length === 0){
-      productGrid.innerHTML = "No products found.";
-      return;
-    }
-
-    productGrid.innerHTML = "";
-    products.forEach(product => {
-      productGrid.innerHTML += `
-        <div class="product">
-          <img src="${product.image}" alt="${product.name}" />
-          <h3>${product.name}</h3>
-          <p>₹${parseFloat(product.price).toFixed(2)}</p>
-          <button onclick="addToCart('${product.id}')">Add to Cart</button>
-        </div>
-      `;
-    });
-  }
-
-  // Search input event
-  searchInput.addEventListener('input', (e) => {
-    loadProducts(e.target.value);
-  });
-
-  // Add new product to Firestore
-  addProductBtn.addEventListener('click', async () => {
-    const nameInput = document.getElementById('admin-product-name');
-    const priceInput = document.getElementById('admin-product-price');
-    const imageInput = document.getElementById('admin-product-image');
-
-    const name = nameInput.value.trim();
-    const price = parseFloat(priceInput.value);
-    const image = imageInput.value.trim();
-
-    if(!name || isNaN(price) || !image){
-      alert("Please fill all product fields correctly.");
-      return;
-    }
-
-    try {
-      await addDoc(collection(db, 'products'), { name, price, image });
-      alert("Product added!");
-      nameInput.value = "";
-      priceInput.value = "";
-      imageInput.value = "";
-      loadProducts();
-    } catch (error) {
-      alert("Error adding product.");
-      console.error(error);
-    }
-  });
-
-  // Dummy addToCart function (replace with real cart logic if needed)
-  window.addToCart = (id) => {
-    alert("Added to cart: " + id);
-  }
-
-  // Load products initially on page load
-  window.onload = () => {
-    loadProducts();
-  };
-</script>
-
+  <script type="module" src="script.js"></script>
 </body>
 </html>
