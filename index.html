@@ -3,30 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SnitchCart - Your Online Store</title>
+  <title>SnitchCart - Shop Your Style</title>
   <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <header>
-    <img src="logo.png" alt="SnitchCart Logo" class="logo" />
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="admin.html" id="adminLink" style="display:none;">Admin Panel</a>
-    </nav>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header-container">
+      <div class="logo">
+        <img src="logo.png" alt="SnitchCart Logo" />
+        <h1>SnitchCart</h1>
+      </div>
+      <form class="search-bar" id="searchForm">
+        <input type="text" id="searchInput" placeholder="Search for products, brands..." />
+        <button type="submit">🔍</button>
+      </form>
+      <div class="cart-icon" title="Cart">
+        🛒 <span id="cartCount">0</span>
+      </div>
+    </div>
   </header>
 
+  <!-- OFFER BANNER -->
   <section class="offer-banner">
-    <h2>🔥 Hot Deals on Summer Collection! Up to 50% OFF 🔥</h2>
+    <p>🔥 Summer Sale! Up to 40% OFF on select items. Shop Now!</p>
   </section>
 
+  <!-- PRODUCTS GRID -->
   <main>
-    <h1>Featured Products</h1>
-    <input type="text" id="searchInput" placeholder="Search products..." />
-    <div id="products" class="products-grid">
-      <!-- Products load here dynamically -->
-    </div>
+    <section class="products-container" id="productsContainer">
+      <!-- Products loaded by JS -->
+    </section>
   </main>
 
-  <script type="module" src="app.js"></script>
+  <script src="main.js" type="module"></script>
 </body>
 </html>
