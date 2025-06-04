@@ -1,49 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SnitchMart - Premium Deals</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SnitchMart</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="logo.png" />
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+  <script src="firebaseConfig.js" defer></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
   <header>
     <div class="header-left">
-      <img src="logo.png" alt="SnitchMart Logo" class="logo" />
+      <img src="logo.png" class="logo" alt="SnitchMart Logo" />
       <h1>SnitchMart</h1>
     </div>
     <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Search Puma, Nike, Shoes, Deals..." />
+      <input type="text" id="searchInput" placeholder="Search for products...">
     </div>
-    <div class="header-right">
-      <button class="cart-btn">🛒 Cart</button>
-    </div>
-  </header>
-
-  <section class="hero">
-    <h2>🔥 Flash Sale: Up to 60% OFF on Top Brands! 🔥</h2>
-  </section>
-
-  <main>
-    <section class="categories">
-      <button>Shoes</button>
-      <button>Men</button>
-      <button>Women</button>
-      <button>Accessories</button>
-      <button>Offers</button>
-    </section>
-
-    <section class="product-grid" id="productList">
-      <p class="loading">Loading best deals...</p>
-    </section>
-  </main>
-
-  <footer>
-    <p>© 2025 SnitchMart • Built by MidowTech</p>
+  </header>  <section class="hero">🔥 Big Deal Today! Flat 50% Off on Puma & Nike T-Shirts 🔥</section>  <section class="product-grid" id="productGrid">
+    <!-- Products will be loaded here -->
+  </section>  <footer>
+    &copy; 2025 SnitchMart | All rights reserved
   </footer>
-
-  <script type="module" src="firebaseConfig.js"></script>
-  <script type="module" src="app.js"></script>
 </body>
-  </html>
+</html>
