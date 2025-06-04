@@ -1,57 +1,84 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: #f2f4f8;
-  color: #333;
+  background: #f1f3f6;
+  color: #222;
 }
 
 header {
-  background: #0047ab;
+  background: #0f1111;
   color: white;
+  padding: 10px 20px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding: 15px 20px;
+}
+
+.header-left {
+  display: flex;
   align-items: center;
 }
 
 .logo {
-  display: flex;
-  align-items: center;
-}
-
-.logo img {
   height: 40px;
   margin-right: 10px;
 }
 
-.logo h1 {
+h1 {
   font-size: 24px;
-  margin: 0;
-}
-
-nav input {
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 6px;
-  border: none;
-  width: 250px;
-}
-
-.banner {
-  background: linear-gradient(90deg, #f12711, #f5af19);
-  color: white;
-  text-align: center;
-  padding: 10px;
   font-weight: bold;
 }
 
-main {
-  padding: 20px;
+.search-bar input {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  width: 300px;
+  font-size: 16px;
 }
 
-.product-list {
+.cart-btn {
+  background: #febd69;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.hero {
+  background: linear-gradient(90deg, #ff512f, #dd2476);
+  color: white;
+  text-align: center;
+  padding: 12px;
+  font-size: 18px;
+}
+
+.categories {
+  display: flex;
+  gap: 10px;
+  padding: 10px 20px;
+  overflow-x: auto;
+}
+
+.categories button {
+  padding: 8px 14px;
+  border: none;
+  background: #e0e0e0;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.categories button:hover {
+  background: #febd69;
+}
+
+.product-grid {
   display: grid;
   gap: 20px;
+  padding: 20px;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
@@ -59,13 +86,13 @@ main {
   background: white;
   border-radius: 10px;
   padding: 15px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   position: relative;
-  transition: 0.3s ease;
+  transition: 0.3s;
 }
 
 .product-card:hover {
-  transform: scale(1.02);
+  transform: translateY(-5px);
 }
 
 .product-card img {
@@ -82,8 +109,8 @@ main {
 
 .product-card p {
   margin: 0;
+  color: #007185;
   font-weight: bold;
-  color: #0047ab;
 }
 
 .offer-badge {
@@ -98,7 +125,7 @@ main {
 }
 
 footer {
-  background: #0047ab;
+  background: #0f1111;
   color: white;
   text-align: center;
   padding: 15px;
