@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SNITCHMART - Professional Ecommerce</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>SNITCHMART</header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="#offers">Offers</a>
+    <a href="mailto:snitch44@gmail.com">Contact</a>
+    <a href="admin.html" style="color:#ffde59;">Admin Panel</a>
+  </nav>
+
+  <main>
+    <section id="offers" class="offers">
+      🔥 Special Offer: Flat 10% OFF on all products above ₹10,000! 🔥
+    </section>
+
+    <h2>Our Products</h2>
+    <div class="products" id="productsContainer">
+      <!-- Products load here -->
+    </div>
+  </main>
+
+  <footer>
+    Created by Midow Web Developer | Contact: snitch44@gmail.com
+  </footer>
+
+  <script type="module">
+    import { db, collection, getDocs, deleteDoc, doc } from "./firebase.js";
+
+    async function loadProducts() {
+      const productsCol = collection(db, "products");
+      const productsSnapshot = await getDocs(productsCol);
+      const products = productsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+      const container = document.getElementById("productsContainer");
+      container.innerHTML = "";
+
+      products.forEach(product => {
+        if(product.price >= 999 && product.price <= 45000){
+          const card = document.createElement("div");
+          card.className = "product-card";
+          card.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" />
+            <div class="product-name">${product.name}</div>
+            <div class="product-price">₹${product.price}</div>
+          `;
+          container.appendChild(card);
+        }
+      });
+    }
+
+    loadProducts();
+  </script>
+</body>
+</html>
