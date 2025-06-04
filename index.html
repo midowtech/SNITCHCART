@@ -2,37 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Snitchcart Ecommerce</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Snitchcart</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <header>
-    <div class="logo">Snitchcart</div>
+    <div class="logo">SNITCHCART</div>
     <nav>
-      <input type="text" id="search-input" placeholder="Search products..." />
-      <button id="admin-toggle-btn">Admin Panel</button>
+      <input type="text" placeholder="Search products..." id="search-input"/>
+      <button id="admin-toggle-btn">Admin</button>
     </nav>
   </header>
 
-  <div class="offers">🔥 Special Offer: Free Delivery on Orders Over ₹1000!</div>
+  <div class="offers">🔥 Get 20% Off on Puma Shoes! Limited Time!</div>
 
-  <section class="product-grid" id="product-grid">
-    <!-- Products will load here -->
-  </section>
+  <main>
+    <div id="product-grid" class="product-grid">
+      <!-- Products will load here -->
+    </div>
 
-  <section id="admin-panel" style="display:none;">
-    <h2>Add New Product</h2>
-    <input type="text" id="admin-product-name" placeholder="Product Name" />
-    <input type="number" id="admin-product-price" placeholder="Price" />
-    <input type="text" id="admin-product-image" placeholder="Image URL" />
-    <button id="add-product-btn">Add Product</button>
-  </section>
+    <section id="admin-panel" style="display:none;">
+      <h2>Add Product</h2>
+      <input id="admin-product-name" type="text" placeholder="Product Name"/><br/>
+      <input id="admin-product-price" type="number" placeholder="Product Price"/><br/>
+      <input id="admin-product-image" type="text" placeholder="Image URL"/><br/>
+      <button id="add-product-btn">Add Product</button>
+    </section>
+  </main>
 
-  <footer>
-    &copy; 2025 Snitchcart. All rights reserved.
-  </footer>
+  <footer>© 2025 Snitchcart by MidowTech. All rights reserved.</footer>
 
+  <!-- Firebase SDKs -->
   <script type="module" src="script.js"></script>
 </body>
 </html>
