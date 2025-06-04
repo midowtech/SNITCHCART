@@ -3,81 +3,120 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SNITCHMART Admin Panel</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>SnitchCart Admin Panel</title>
+  <style>
+    body { background: #111; color: #0f0; font-family: monospace; padding: 20px; }
+    input, button { padding: 8px; margin: 5px 0; font-size: 1rem; }
+    .product { background: #222; padding: 10px; margin: 10px 0; border-radius: 5px; display:flex; justify-content: space-between; }
+    button.delete { background: red; color: white; border: none; cursor: pointer; }
+  </style>
 </head>
 <body>
-  <header>SNITCHMART - Admin Panel</header>
 
-  <main style="max-width:600px; margin:auto; padding:2rem;">
-    <form id="productForm">
-      <h2>Add New Product</h2>
-      <label>
-        Name:<br />
-        <input type="text" id="name" required />
-      </label>
-      <br /><br />
-      <label>
-        Price (₹999 - ₹45000):<br />
-        <input type="number" id="price" min="999" max="45000" required />
-      </label>
-      <br /><br />
-      <label>
-        Image URL:<br />
-        <input type="url" id="image" required />
-      </label>
-      <br /><br />
-      <button type="submit">Add Product</button>
-    </form>
+<h1>SnitchCart Admin Panel</h1>
 
-    <hr />
+<div>
+  <h2>Add New Product</h2>
+  <input type="text" id="productName" placeholder="Product Name" />
+  <input type="number" id="productPrice" placeholder="Price (₹999 - ₹45000)" min="999" max="45000" />
+  <input type="text" id="productImage" placeholder="Image URL" />
+  <button id="addProductBtn">Add Product</button>
+</div>
 
-    <h2>Existing Products</h2>
-    <div id="productsList"></div>
-  </main>
+<h2>Product List</h2>
+<div id="productList"></div>
 
-  <script type="module">
-    import { db, collection, getDocs, addDoc, deleteDoc, doc } from "./firebase.js";
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 
-    const productForm = document.getElementById("productForm");
-    const productsList = document.getElementById("productsList");
+<script>
+  // Admin Password check
+  const ADMIN_PASSWORD = "MidowAdmin123";  // Change this strong password!
+  (function checkAdminAccess() {
+    const pass = prompt("Enter admin password to access Admin Panel:");
+    if(pass !== ADMIN_PASSWORD){
+      alert("Access Denied!");
+      window.location.href = "index.html";
+    }
+  })();
 
-    async function loadProducts() {
-      const productsCol = collection(db, "products");
-      const productsSnapshot = await getDocs(productsCol);
-      const products = productsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  // Firebase config - apna config yahan daale
+  const firebaseConfig = {
+    apiKey: "AIzaSyD-QxJDh8QU2aI8c2kpfTZBNemyvmjq1LE",
+    authDomain: "snitchmart-a8073.firebaseapp.com",
+    projectId: "snitchmart-a8073",
+    storageBucket: "snitchmart-a8073.appspot.com",
+    messagingSenderId: "381112072944",
+    appId: "1:381112072944:web:36f7e3269a847a942da035"
+  };
 
-      productsList.innerHTML = "";
-      products.forEach(product => {
-        const div = document.createElement("div");
-        div.style = "background:#222; margin:0.5rem 0; padding:1rem; border-radius:8px; box-shadow: 0 0 10px #ffde59;";
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  // Add product
+  const addBtn = document.getElementById('addProductBtn');
+  addBtn.onclick = async () => {
+    const name = document.getElementById('productName').value.trim();
+    const price = parseInt(document.getElementById('productPrice').value);
+    const img = document.getElementById('productImage').value.trim();
+
+    if(!name || !price || price < 999 || price > 45000 || !img) {
+      alert("Please enter valid details!");
+      return;
+    }
+
+    try {
+      await db.collection('products').add({ name, price, img });
+      alert("Product added!");
+      document.getElementById('productName').value = '';
+      document.getElementById('productPrice').value = '';
+      document.getElementById('productImage').value = '';
+      loadProducts();
+    } catch(e) {
+      alert("Error adding product: "+e.message);
+    }
+  };
+
+  // Load products
+  async function loadProducts() {
+    const list = document.getElementById('productList');
+    list.innerHTML = 'Loading...';
+
+    try {
+      const snapshot = await db.collection('products').get();
+      list.innerHTML = '';
+      snapshot.forEach(doc => {
+        const product = doc.data();
+        const div = document.createElement('div');
+        div.className = 'product';
         div.innerHTML = `
-          <strong>${product.name}</strong> - ₹${product.price}
-          <button data-id="${product.id}" style="float:right; background:#ff6f61; border:none; color:#fff; padding:0.3rem 0.8rem; border-radius:5px; cursor:pointer;">Delete</button>
-          <br/>
-          <img src="${product.image}" alt="${product.name}" style="max-width:100px; margin-top:0.5rem; border-radius:6px;"/>
+          <div>
+            <strong>${product.name}</strong><br/>
+            Price: ₹${product.price}<br/>
+            <img src="${product.img}" style="height:80px; margin-top:5px; border-radius:5px;" />
+          </div>
+          <button class="delete" data-id="${doc.id}">Delete</button>
         `;
-        productsList.appendChild(div);
+        list.appendChild(div);
+      });
 
-        div.querySelector("button").onclick = async (e) => {
-          const id = e.target.getAttribute("data-id");
-          if(confirm("Are you sure you want to delete this product?")){
-            await deleteDoc(doc(db, "products", id));
+      // Add delete handlers
+      document.querySelectorAll('button.delete').forEach(btn => {
+        btn.onclick = async () => {
+          if(confirm("Delete this product?")) {
+            await db.collection('products').doc(btn.dataset.id).delete();
             loadProducts();
           }
         }
       });
+
+    } catch(e) {
+      list.innerHTML = 'Error loading products: ' + e.message;
     }
+  }
 
-    productForm.onsubmit = async (e) => {
-      e.preventDefault();
-      const name = document.getElementById("name").value.trim();
-      const price = Number(document.getElementById("price").value);
-      const image = document.getElementById("image").value.trim();
+  loadProducts();
+</script>
 
-      if(price < 999 || price > 45000){
-        alert("Price must be between ₹999 and ₹45000.");
-        return;
-      }
-
-      await addDoc(collection(db, "products"),
+</body>
+</html>
