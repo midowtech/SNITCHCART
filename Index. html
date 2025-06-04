@@ -1,277 +1,170 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SnitchCart - Professional Demo</title>
+  <title>SurfKart - Your Ultimate Shopping Experience</title>
   <style>
-    /* Reset & Base */
     * {
       box-sizing: border-box;
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     body {
-      background: #f0f2f5;
+      background: #f5f7fa;
       color: #333;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding: 40px 20px;
     }
-
     header {
-      margin-bottom: 40px;
+      background: #0077cc;
+      padding: 20px;
+      color: white;
       text-align: center;
-    }
-    header h1 {
-      font-size: 2.8rem;
-      color: #2c3e50;
-      margin-bottom: 8px;
+      font-size: 1.8rem;
+      font-weight: bold;
       letter-spacing: 2px;
     }
-    header p {
-      color: #7f8c8d;
-      font-weight: 500;
-      font-size: 1.1rem;
+    nav {
+      background: #025fa1;
+      padding: 10px 0;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
     }
-
-    /* Products Grid */
-    #products {
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #ffd700;
+    }
+    main {
+      flex: 1;
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
       display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-      gap: 25px;
-      width: 100%;
-      max-width: 1000px;
-      margin-bottom: 50px;
+      grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+      gap: 30px;
     }
-
-    .product {
-      background: #fff;
+    .card {
+      background: white;
       border-radius: 12px;
-      padding: 25px 20px;
-      box-shadow: 0 4px 15px rgb(0 0 0 / 0.1);
+      box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 15px;
+      flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.2s ease;
     }
-    .product:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgb(0 0 0 / 0.15);
-    }
-    .product h2 {
-      font-size: 1.5rem;
-      color: #34495e;
-      margin-bottom: 10px;
-      font-weight: 700;
-    }
-    .product .price {
-      font-size: 1.25rem;
-      color: #27ae60;
-      margin-bottom: 20px;
-      font-weight: 600;
-    }
-    .product button {
-      background-color: #27ae60;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 12px 18px;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      box-shadow: 0 5px 12px rgb(39 174 96 / 0.4);
-    }
-    .product button:hover {
-      background-color: #219150;
-    }
-
-    /* Cart Section */
-    #cart {
-      background: #fff;
-      width: 100%;
-      max-width: 600px;
-      border-radius: 12px;
-      padding: 25px 30px;
-      box-shadow: 0 4px 18px rgb(0 0 0 / 0.1);
-    }
-    #cart h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      color: #2c3e50;
-      border-bottom: 2px solid #27ae60;
-      padding-bottom: 8px;
-    }
-    #cart ul {
-      list-style: none;
-      max-height: 220px;
-      overflow-y: auto;
-      margin-bottom: 25px;
-      padding-right: 8px;
-    }
-    #cart ul::-webkit-scrollbar {
-      width: 7px;
-    }
-    #cart ul::-webkit-scrollbar-thumb {
-      background: #27ae60;
-      border-radius: 10px;
-    }
-    #cart li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .card-title {
       font-size: 1.1rem;
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #eee;
-      color: #34495e;
-    }
-    #cart li button {
-      background: #e74c3c;
-      border: none;
-      border-radius: 6px;
-      color: white;
       font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .card-desc {
       font-size: 0.9rem;
-      padding: 6px 12px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      box-shadow: 0 4px 12px rgb(231 76 60 / 0.4);
+      color: #666;
+      margin-bottom: 15px;
+      flex-grow: 1;
     }
-    #cart li button:hover {
-      background-color: #c0392b;
-    }
-
-    #total {
-      font-size: 1.4rem;
+    .card-price {
       font-weight: 700;
-      color: #27ae60;
-      margin-bottom: 25px;
-      display: block;
-      text-align: right;
+      font-size: 1.1rem;
+      color: #0077cc;
+      margin-bottom: 10px;
     }
-
-    #checkout-btn {
-      width: 100%;
-      padding: 14px 0;
-      font-size: 1.25rem;
-      font-weight: 700;
+    .btn-buy {
+      background: #0077cc;
       color: white;
-      background-color: #2980b9;
       border: none;
-      border-radius: 10px;
+      padding: 10px 0;
+      font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 7px 18px rgb(41 128 185 / 0.5);
+      border-radius: 6px;
       transition: background-color 0.3s ease;
     }
-    #checkout-btn:disabled {
-      background-color: #95a5a6;
-      cursor: not-allowed;
-      box-shadow: none;
+    .btn-buy:hover {
+      background: #005fa3;
     }
-    #checkout-btn:not(:disabled):hover {
-      background-color: #1c5980;
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      body {
-        padding: 20px 10px;
-      }
-      #products {
-        grid-template-columns: 1fr;
-      }
-      #cart {
-        max-width: 100%;
-        padding: 20px;
-      }
+    footer {
+      background: #0077cc;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9rem;
+      margin-top: 40px;
     }
   </style>
 </head>
 <body>
-
-<header>
-  <h1>SnitchCart</h1>
-  <p>Professional Shopping Cart Demo</p>
-</header>
-
-<main>
-  <section id="products">
-    <div class="product">
-      <h2>Mobile Phone</h2>
-      <div class="price">₹15,000</div>
-      <button onclick="addToCart('Mobile Phone', 15000)">Add to Cart</button>
+  <header>SurfKart</header>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Shop</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </nav>
+  <main>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=400&q=80" alt="Surfboard">
+      <div class="card-body">
+        <div class="card-title">Premium Surfboard</div>
+        <div class="card-desc">High quality surfboard for all skill levels.</div>
+        <div class="card-price">₹12,499</div>
+        <button class="btn-buy">Buy Now</button>
+      </div>
     </div>
-    <div class="product">
-      <h2>Laptop</h2>
-      <div class="price">₹55,000</div>
-      <button onclick="addToCart('Laptop', 55000)">Add to Cart</button>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=400&q=80" alt="Surf Wetsuit">
+      <div class="card-body">
+        <div class="card-title">Waterproof Wetsuit</div>
+        <div class="card-desc">Stay warm and stylish in cold waters.</div>
+        <div class="card-price">₹5,999</div>
+        <button class="btn-buy">Buy Now</button>
+      </div>
     </div>
-    <div class="product">
-      <h2>Headphones</h2>
-      <div class="price">₹2,000</div>
-      <button onclick="addToCart('Headphones', 2000)">Add to Cart</button>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Surf Wax">
+      <div class="card-body">
+        <div class="card-title">Surf Wax Pack</div>
+        <div class="card-desc">Keep your board grippy and ready.</div>
+        <div class="card-price">₹499</div>
+        <button class="btn-buy">Buy Now</button>
+      </div>
     </div>
-    <div class="product">
-      <h2>Smart Watch</h2>
-      <div class="price">₹8,000</div>
-      <button onclick="addToCart('Smart Watch', 8000)">Add to Cart</button>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=400&q=80" alt="Surf Leash">
+      <div class="card-body">
+        <div class="card-title">Durable Surf Leash</div>
+        <div class="card-desc">Never lose your board while riding waves.</div>
+        <div class="card-price">₹799</div>
+        <button class="btn-buy">Buy Now</button>
+      </div>
     </div>
-  </section>
-
-  <section id="cart">
-    <h2>Your Cart</h2>
-    <ul id="cart-items"></ul>
-    <strong id="total">Total: ₹0</strong>
-    <button id="checkout-btn" onclick="checkout()" disabled>Checkout</button>
-  </section>
-</main>
-
-<script>
-  const cart = [];
-
-  function addToCart(name, price) {
-    cart.push({ name, price });
-    renderCart();
-  }
-
-  function removeFromCart(index) {
-    cart.splice(index, 1);
-    renderCart();
-  }
-
-  function renderCart() {
-    const cartItems = document.getElementById('cart-items');
-    cartItems.innerHTML = '';
-    let total = 0;
-
-    cart.forEach((item, idx) => {
-      total += item.price;
-      const li = document.createElement('li');
-      li.textContent = `${item.name} - ₹${item.price.toLocaleString()}`;
-      const btn = document.createElement('button');
-      btn.textContent = 'Remove';
-      btn.onclick = () => removeFromCart(idx);
-      li.appendChild(btn);
-      cartItems.appendChild(li);
-    });
-
-    document.getElementById('total').textContent = `Total: ₹${total.toLocaleString()}`;
-    document.getElementById('checkout-btn').disabled = cart.length === 0;
-  }
-
-  function checkout() {
-    alert(`Checkout successful! Total amount: ₹${cart.reduce((a, b) => a + b.price, 0).toLocaleString()}`);
-    cart.length = 0;
-    renderCart();
-  }
-
-  renderCart();
-</script>
-
+  </main>
+  <footer>
+    &copy; 2025 SurfKart | All Rights Reserved
+  </footer>
 </body>
 </html>
