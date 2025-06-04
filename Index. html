@@ -1,18 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
-  <meta
-    name="description"
-    content="SnitchCart - Simple React Shopping Site"
-  />
-  <title>SnitchCart</title>
+  <title>SnitchCart Demo</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
+    h1 { color: #333; }
+    .product { background: white; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+    button { margin-left: 10px; padding: 5px 10px; cursor: pointer; }
+    #cart { margin-top: 30px; background: white; padding: 15px; border-radius: 5px; }
+    #cart ul { list-style: none; padding: 0; }
+    #cart li { margin-bottom: 5px; }
+  </style>
 </head>
 <body>
-  <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root"></div>
+
+  <h1>SnitchCart Demo - Simple Shopping</h1>
+
+  <div id="products">
+    <div class="product">
+      Mobile Phone - ₹15000
+      <button onclick="addToCart('Mobile Phone', 15000)">Add to Cart</button>
+    </div>
+    <div class="product">
+      Laptop - ₹55000
+      <button onclick="addToCart('Laptop', 55000)">Add to Cart</button>
+    </div>
+    <div class="product">
+      Headphones - ₹2000
+      <button onclick="addToCart('Headphones', 2000)">Add to Cart</button>
+    </div>
+    <div class="product">
+      Smart Watch - ₹8000
+      <button onclick="addToCart('Smart Watch', 8000)">Add to Cart</button>
+    </div>
+  </div>
+
+  <div id="cart">
+    <h2>Your Cart</h2>
+    <ul id="cart-items"></ul>
+    <strong>Total: ₹<span id="total">0</span></strong>
+    <br /><br />
+    <button onclick="checkout()" id="checkout-btn" disabled>Checkout</button>
+  </div>
+
+<script>
+  const cart = [];
+
+  function addToCart(name, price) {
+    cart.push({ name, price });
+    renderCart();
+  }
+
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    renderCart();
+  }
+
+  function renderCart() {
+    const cartItems = document.getElementById('cart-items');
+    cartItems.innerHTML = '';
+    let total = 0;
+
+    cart.forEach((item, idx) => {
+      total += item.price;
+      const li = document.createElement('li');
+      li.textContent = `${item.name} - ₹${item.price}`;
+      const btn = document.createElement('button');
+      btn.textContent = 'Remove';
+      btn.onclick = () => removeFromCart(idx);
+      li.appendChild(btn);
+      cartItems.appendChild(li);
+    });
+
+    document.getElementById('total').textContent = total;
+    document.getElementById('checkout-btn').disabled = cart.length === 0;
+  }
+
+  function checkout() {
+    alert('Checkout successful! Total amount: ₹' + cart.reduce((a,b) => a + b.price, 0));
+    cart.length = 0;
+    renderCart();
+  }
+
+  renderCart();
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SnitchCart Demo</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
+    h1 { color: #333; }
+    .product { background: white; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+    button { margin-left: 10px; padding: 5px 10px; cursor: pointer; }
+    #cart { margin-top: 30px; background: white; padding: 15px; border-radius: 5px; }
+    #cart ul { list-style: none; padding: 0; }
+    #cart li { margin-bottom: 5px; }
+  </style>
+</head>
+<body>
+
+  <h1>SnitchCart Demo - Simple Shopping</h1>
+
+  <div id="products">
+    <div class="product">
+      Mobile Phone - ₹15000
+      <button onclick="addToCart('Mobile Phone', 15000)">Add to Cart</button>
+    </div>
+    <div class="product">
+      Laptop - ₹55000
+      <button onclick="addToCart('Laptop', 55000)">Add to Cart</button>
+    </div>
+    <div class="product">
+      Headphones - ₹2000
+      <button onclick="addToCart('Headphones', 2000)">Add to Cart</button>
+    </div>
+    <div class="product">
+      Smart Watch - ₹8000
+      <button onclick="addToCart('Smart Watch', 8000)">Add to Cart</button>
+    </div>
+  </div>
+
+  <div id="cart">
+    <h2>Your Cart</h2>
+    <ul id="cart-items"></ul>
+    <strong>Total: ₹<span id="total">0</span></strong>
+    <br /><br />
+    <button onclick="checkout()" id="checkout-btn" disabled>Checkout</button>
+  </div>
+
+<script>
+  const cart = [];
+
+  function addToCart(name, price) {
+    cart.push({ name, price });
+    renderCart();
+  }
+
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    renderCart();
+  }
+
+  function renderCart() {
+    const cartItems = document.getElementById('cart-items');
+    cartItems.innerHTML = '';
+    let total = 0;
+
+    cart.forEach((item, idx) => {
+      total += item.price;
+      const li = document.createElement('li');
+      li.textContent = `${item.name} - ₹${item.price}`;
+      const btn = document.createElement('button');
+      btn.textContent = 'Remove';
+      btn.onclick = () => removeFromCart(idx);
+      li.appendChild(btn);
+      cartItems.appendChild(li);
+    });
+
+    document.getElementById('total').textContent = total;
+    document.getElementById('checkout-btn').disabled = cart.length === 0;
+  }
+
+  function checkout() {
+    alert('Checkout successful! Total amount: ₹' + cart.reduce((a,b) => a + b.price, 0));
+    cart.length = 0;
+    renderCart();
+  }
+
+  renderCart();
+</script>
+
 </body>
 </html>
