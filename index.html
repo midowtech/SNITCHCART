@@ -1,231 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SNITCHCART | Puma Vibe</title>
-  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Urbanist', sans-serif;
-      background: #f9f9f9;
-      color: #111;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    header {
-      background: #000;
-      color: #fff;
-      padding: 20px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      letter-spacing: 1px;
-    }
-    header h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #fff;
-    }
-    nav a {
-      color: #fff;
-      margin-left: 30px;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 1rem;
-      transition: 0.3s;
-    }
-    nav a:hover {
-      color: red;
-    }
-
-    .banner {
-      background: red;
-      color: #fff;
-      text-align: center;
-      padding: 15px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      font-size: 1.2rem;
-    }
-
-    .products-container {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 0 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-    }
-
-    .product-card {
-      background: #fff;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      cursor: pointer;
-    }
-    .product-card:hover {
-      transform: scale(1.03);
-      box-shadow: 0 10px 28px rgba(0,0,0,0.15);
-    }
-    .product-img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      transition: 0.3s ease;
-    }
-
-    .product-info {
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .product-name {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-      min-height: 48px;
-    }
-
-    .product-price {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: red;
-      margin-bottom: 8px;
-    }
-
-    .product-starts {
-      font-size: 0.95rem;
-      color: #666;
-      margin-bottom: 15px;
-    }
-
-    .btn-add {
-      background: #000;
-      color: #fff;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: background 0.3s;
-    }
-
-    .btn-add:hover {
-      background: red;
-      color: #fff;
-    }
-
-    footer {
-      background: #000;
-      color: #fff;
-      text-align: center;
-      padding: 18px;
-      margin-top: auto;
-      font-size: 0.95rem;
-    }
-    footer a {
-      color: red;
-      text-decoration: none;
-    }
-
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 1.5rem;
-      }
-      nav a {
-        margin-left: 16px;
-        font-size: 0.95rem;
-      }
-    }
-  </style>
-</head>
-<body>
-
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SNITCHCART | Premium Shopping</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <script type="module" src="firebase-config.js"></script>
+</head><body>
   <header>
-    <h1>SNITCHCART</h1>
+    <div class="logo">SNITCHCART</div>
     <nav>
-      <a href="#products">Products</a>
-      <a href="#offers">Offers</a>
-      <a href="#contact">Contact</a>
+      <input type="text" id="searchInput" placeholder="Search products...">
+      <button onclick="searchProducts()">Search</button>
+      <a href="#cart">Cart 🛒</a>
     </nav>
-  </header>
-
-  <div class="banner" id="offers">
-    🛍 Flat 10% Off on Everything - Limited Time Puma Drop 🛍
-  </div>
-
-  <main>
-    <section class="products-container" id="products">
-      <!-- Products rendered by JavaScript -->
-    </section>
-  </main>
-
-  <footer id="contact">
-    Contact: <a href="mailto:snitch44@gmail.com">snitch44@gmail.com</a> | Designed by Midow
-  </footer>
-
-  <script>
-    const products = [
-      {
-        id: 1,
-        name: "Puma Black Sneakers",
-        price: 2999,
-        img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80"
-      },
-      {
-        id: 2,
-        name: "Puma Hoodie (Red Edition)",
-        price: 1999,
-        img: "https://images.unsplash.com/photo-1593032465171-8c9b8fcdcdbe?auto=format&fit=crop&w=600&q=80"
-      },
-      {
-        id: 3,
-        name: "Puma Smart Backpack",
-        price: 1599,
-        img: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=600&q=80"
-      },
-      {
-        id: 4,
-        name: "Limited Edition Sneakers",
-        price: 4499,
-        img: "https://images.unsplash.com/photo-1528701800489-34e8a8e21456?auto=format&fit=crop&w=600&q=80"
-      }
-    ];
-
-    function renderProducts() {
-      const container = document.querySelector('.products-container');
-      container.innerHTML = "";
-      products.forEach(product => {
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        card.innerHTML = `
-          <img src="${product.img}" alt="${product.name}" class="product-img" />
-          <div class="product-info">
-            <div class="product-name">${product.name}</div>
-            <div class="product-price">₹${product.price}</div>
-            <div class="product-starts">Starts at ₹999</div>
-            <button class="btn-add">Add to Cart</button>
-          </div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    window.onload = renderProducts;
-  </script>
-
-</body>
-</html>
+  </header>  <section class="offers">
+    <h2>🔥 Exclusive Deals 🔥</h2>
+    <p>Products starting from ₹999 only!</p>
+  </section>  <section id="product-list" class="product-grid">
+    <!-- Products will be dynamically injected here -->
+  </section>  <footer>
+    <p>Contact us: <a href="mailto:snitch44@gmail.com">snitch44@gmail.com</a></p>
+    <p>Created by Midow Web Developer</p>
+  </footer>  <script src="main.js" type="module"></script></body></html>
