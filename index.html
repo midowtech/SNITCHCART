@@ -3,50 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SNITCHCART - Your Online Store</title>
-  
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
-  
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js"></script>
-  
-  <!-- Style -->
+  <title>Snitchcart Ecommerce</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <header>
+    <div class="logo">Snitchcart</div>
+    <nav>
+      <input type="text" id="search-input" placeholder="Search products..." />
+      <button id="admin-toggle-btn">Admin Panel</button>
+    </nav>
+  </header>
 
-<header>
-  <div class="logo">SNITCHCART</div>
-  <nav>
-    <input id="searchInput" type="text" placeholder="Search products..." />
-    <button onclick="filterProducts()">Search</button>
-    <button onclick="toggleAdminPanel()">Admin Panel</button>
-  </nav>
-</header>
+  <div class="offers">🔥 Special Offer: Free Delivery on Orders Over ₹1000!</div>
 
-<div class="offers">
-  Flat 30% OFF on All Products! Use code: SNITCH30
-</div>
+  <section class="product-grid" id="product-grid">
+    <!-- Products will load here -->
+  </section>
 
-<div id="product-grid" class="product-grid">
-  <!-- Products will load here dynamically -->
-</div>
+  <section id="admin-panel" style="display:none;">
+    <h2>Add New Product</h2>
+    <input type="text" id="admin-product-name" placeholder="Product Name" />
+    <input type="number" id="admin-product-price" placeholder="Price" />
+    <input type="text" id="admin-product-image" placeholder="Image URL" />
+    <button id="add-product-btn">Add Product</button>
+  </section>
 
-<!-- Admin Panel -->
-<section id="admin-panel" style="display:none;">
-  <h2>Admin Panel - Add Product</h2>
-  <input type="text" id="admin-product-name" placeholder="Product Name" />
-  <input type="number" id="admin-product-price" placeholder="Price (₹)" />
-  <input type="text" id="admin-product-image" placeholder="Image URL" />
-  <button onclick="addProduct()">Add Product</button>
-</section>
+  <footer>
+    &copy; 2025 Snitchcart. All rights reserved.
+  </footer>
 
-<footer>
-  &copy; 2025 SNITCHCART. All rights reserved.
-</footer>
-
-<script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
