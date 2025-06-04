@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SNITCHMART Admin Panel</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>SNITCHMART - Admin Panel</header>
+
+  <main style="max-width:600px; margin:auto; padding:2rem;">
+    <form id="productForm">
+      <h2>Add New Product</h2>
+      <label>
+        Name:<br />
+        <input type="text" id="name" required />
+      </label>
+      <br /><br />
+      <label>
+        Price (₹999 - ₹45000):<br />
+        <input type="number" id="price" min="999" max="45000" required />
+      </label>
+      <br /><br />
+      <label>
+        Image URL:<br />
+        <input type="url" id="image" required />
+      </label>
+      <br /><br />
+      <button type="submit">Add Product</button>
+    </form>
+
+    <hr />
+
+    <h2>Existing Products</h2>
+    <div id="productsList"></div>
+  </main>
+
+  <script type="module">
+    import { db, collection, getDocs, addDoc, deleteDoc, doc } from "./firebase.js";
+
+    const productForm = document.getElementById("productForm");
+    const productsList = document.getElementById("productsList");
+
+    async function loadProducts() {
+      const productsCol = collection(db, "products");
+      const productsSnapshot = await getDocs(productsCol);
+      const products = productsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+      productsList.innerHTML = "";
+      products.forEach(product => {
+        const div = document.createElement("div");
+        div.style = "background:#222; margin:0.5rem 0; padding:1rem; border-radius:8px; box-shadow: 0 0 10px #ffde59;";
+        div.innerHTML = `
+          <strong>${product.name}</strong> - ₹${product.price}
+          <button data-id="${product.id}" style="float:right; background:#ff6f61; border:none; color:#fff; padding:0.3rem 0.8rem; border-radius:5px; cursor:pointer;">Delete</button>
+          <br/>
+          <img src="${product.image}" alt="${product.name}" style="max-width:100px; margin-top:0.5rem; border-radius:6px;"/>
+        `;
+        productsList.appendChild(div);
+
+        div.querySelector("button").onclick = async (e) => {
+          const id = e.target.getAttribute("data-id");
+          if(confirm("Are you sure you want to delete this product?")){
+            await deleteDoc(doc(db, "products", id));
+            loadProducts();
+          }
+        }
+      });
+    }
+
+    productForm.onsubmit = async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const price = Number(document.getElementById("price").value);
+      const image = document.getElementById("image").value.trim();
+
+      if(price < 999 || price > 45000){
+        alert("Price must be between ₹999 and ₹45000.");
+        return;
+      }
+
+      await addDoc(collection(db, "products"),
