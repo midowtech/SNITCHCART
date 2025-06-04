@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SnitchMart</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header>
+    <img src="logo.png" class="logo" alt="SnitchMart Logo" />
+    <h1>Welcome to SnitchMart</h1>
+    <input type="text" id="search" placeholder="Search products..." />
+  </header>
+
+  <main>
+    <div id="products"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 SnitchMart</p>
+  </footer>
+
+  <script type="module">
+    import { db } from './firebaseConfig.js';
+    import { collection, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
+    const searchInput = document.getElementById("search");
+    const productsDiv = document.getElementById("products");
+
+    function renderProducts(query = "") {
+      onSnapshot(collection(db, "products"), (snapshot) => {
+        const data = snapshot.docs
+          .map((doc) => doc.data())
+          .filter((p) => p.name.toLowerCase().includes(query.toLowerCase()));
+
+        productsDiv.innerHTML = data.map(p => `
+          <div class="card">
+            <img src="${p.image}" alt="${p.name}">
+            <h3>${p.name}</h3>
+            <p>₹${p.price}</p>
+            <a href="https://wa.me/918793727113?text=Hi%2C%20I%20want%20to%20buy%20${encodeURIComponent(p.name)}" target="_blank">
+              <button>Order on WhatsApp</button>
+            </a>
+          </div>
+        `).join('');
+      });
+    }
+
+    searchInput.addEventListener("input", () => renderProducts(searchInput.value));
+    renderProducts();
+  </script>
+</body>
+</html>
