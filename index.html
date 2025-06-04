@@ -3,52 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SnitchMart</title>
-  <link rel="stylesheet" href="style.css"/>
+  <title>SnitchMart - Products</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <img src="logo.png" class="logo" alt="SnitchMart Logo" />
-    <h1>Welcome to SnitchMart</h1>
-    <input type="text" id="search" placeholder="Search products..." />
+    <img src="logo.png" alt="SnitchMart Logo" style="height: 60px;">
+    <h1>SnitchMart</h1>
   </header>
 
   <main>
-    <div id="products"></div>
+    <h2>Latest Products</h2>
+    <div id="products" class="product-container"></div>
   </main>
 
-  <footer>
-    <p>&copy; 2025 SnitchMart</p>
-  </footer>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
 
-  <script type="module">
-    import { db } from './firebaseConfig.js';
-    import { collection, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+  <script>
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyD-QxJDh8QU2aI8c2kpfTZBNemyvmjq1LE",
+      authDomain: "snitchmart-a8073.firebaseapp.com",
+      projectId: "snitchmart-a8073",
+      storageBucket: "snitchmart-a8073.appspot.com",
+      messagingSenderId: "381112072944",
+      appId: "1:381112072944:web:36f7e3269a847a942da035",
+      measurementId: "G-Y4LS8V8SLL"
+    };
 
-    const searchInput = document.getElementById("search");
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
     const productsDiv = document.getElementById("products");
 
-    function renderProducts(query = "") {
-      onSnapshot(collection(db, "products"), (snapshot) => {
-        const data = snapshot.docs
-          .map((doc) => doc.data())
-          .filter((p) => p.name.toLowerCase().includes(query.toLowerCase()));
+    db.collection("products").onSnapshot(snapshot => {
+      const products = snapshot.docs.map(doc => doc.data());
 
-        productsDiv.innerHTML = data.map(p => `
-          <div class="card">
-            <img src="${p.image}" alt="${p.name}">
-            <h3>${p.name}</h3>
-            <p>₹${p.price}</p>
-            <a href="https://wa.me/918793727113?text=Hi%2C%20I%20want%20to%20buy%20${encodeURIComponent(p.name)}" target="_blank">
-              <button>Order on WhatsApp</button>
-            </a>
-          </div>
-        `).join('');
-      });
-    }
+      if (products.length === 0) {
+        productsDiv.innerHTML = "<p>No products found.</p>";
+        return;
+      }
 
-    searchInput.addEventListener("input", () => renderProducts(searchInput.value));
-    renderProducts();
+      productsDiv.innerHTML = products.map(p => `
+        <div class="product-card">
+          <img src="${p.image}" alt="${p.name}">
+          <h3>${p.name}</h3>
+          <p>₹${p.price}</p>
+          <p>${p.description}</p>
+          <small>Category: ${p.category}</small>
+          <a href="https://wa.me/918000000000?text=Hi%2C%20I%20want%20to%20buy%20${encodeURIComponent(p.name)}" target="_blank">
+            <button>Order on WhatsApp</button>
+          </a>
+        </div>
+      `).join('');
+    });
   </script>
 </body>
 </html>
