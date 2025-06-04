@@ -1,0 +1,51 @@
+// admin.js
+import { db, auth } from './firebaseConfig.js';
+import { collection, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+
+const adminEmails = ['snitchmart44@gmail.com'];
+
+const loginForm = document.getElementById('loginForm');
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+const loginError = document.getElementById('loginError');
+const adminContent = document.getElementById('adminContent');
+
+const productForm = document.getElementById('productForm');
+const productNameInput = document.getElementById('productName');
+const productPriceInput = document.getElementById('productPrice');
+const productImageInput = document.getElementById('productImage');
+const adminProductsDiv = document.getElementById('adminProducts');
+
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+
+  if (!adminEmails.includes(email)) {
+    loginError.textContent = "Access denied: You are not an admin.";
+    return;
+  }
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    loginError.textContent = "";
+  } catch (error) {
+    loginError.textContent = "Login failed: " + error.message;
+  }
+});
+
+productForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = productNameInput.value.trim();
+  const price = parseFloat(productPriceInput.value);
+  const imageURL = productImageInput.value.trim();
+
+  if (!name || !price || !imageURL) {
+    alert("Please fill all fields correctly.");
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, "products"), {
+      name,
