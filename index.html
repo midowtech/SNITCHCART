@@ -1,39 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Snitchcart</title>
-  <link rel="stylesheet" href="style.css"/>
-</head>
-<body>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SnitchCart Admin Panel</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #121212;
+  color: #fff;
+}
+
+header {
+  background-color: #1e1e1e;
+  padding: 20px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-bottom: 2px solid #333;
+}
+
+.container {
+  padding: 20px;
+}
+
+.card {
+  background-color: #1f1f1f;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.card h2 {
+  margin-bottom: 10px;
+}
+
+.btn {
+  background-color: #ff3c00;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #e33400;
+}
+
+@media (max-width: 600px) {
+  header {
+    font-size: 1.2rem;
+  }
+}
+
+  </style>
+</head><body>
   <header>
-    <div class="logo">SNITCHCART</div>
-    <nav>
-      <input type="text" placeholder="Search products..." id="search-input"/>
-      <button id="admin-toggle-btn">Admin</button>
-    </nav>
-  </header>
-
-  <div class="offers">🔥 Get 20% Off on Puma Shoes! Limited Time!</div>
-
-  <main>
-    <div id="product-grid" class="product-grid">
-      <!-- Products will load here -->
-    </div>
-
-    <section id="admin-panel" style="display:none;">
+    SnitchCart Admin Panel
+  </header>  <div class="container">
+    <div class="card">
       <h2>Add Product</h2>
-      <input id="admin-product-name" type="text" placeholder="Product Name"/><br/>
-      <input id="admin-product-price" type="number" placeholder="Product Price"/><br/>
-      <input id="admin-product-image" type="text" placeholder="Image URL"/><br/>
-      <button id="add-product-btn">Add Product</button>
-    </section>
-  </main>
+      <button class="btn">Add New</button>
+    </div><div class="card">
+  <h2>Manage Products</h2>
+  <button class="btn">View All</button>
+</div>
 
-  <footer>© 2025 Snitchcart by MidowTech. All rights reserved.</footer>
+<div class="card">
+  <h2>Scan QR / Manage</h2>
+  <button class="btn">QR Tools</button>
+</div>
 
-  <!-- Firebase SDKs -->
-  <script type="module" src="script.js"></script>
-</body>
-</html>
+  </div>
+</body></html>
