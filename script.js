@@ -1,113 +1,107 @@
-// Firebase config & initialization (YOUR API keys)
+// Firebase imports (make sure firebase is imported in index.html or setup with npm)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+// Firebase config - apni firebaseConfig object yahan paste karo
 const firebaseConfig = {
   apiKey: "AIzaSyD-QxJDh8QU2aI8c2kpfTZBNemyvmjq1LE",
   authDomain: "snitchmart-a8073.firebaseapp.com",
   projectId: "snitchmart-a8073",
-  storageBucket: "snitchmart-a8073.appspot.com",
+  storageBucket: "snitchmart-a8073.firebasestorage.app",
   messagingSenderId: "381112072944",
   appId: "1:381112072944:web:36f7e3269a847a942da035",
   measurementId: "G-Y4LS8V8SLL"
 };
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+// Initialize Firebase and Firestore
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
+// DOM Elements
 const productGrid = document.getElementById('product-grid');
-const searchInput = document.getElementById('searchInput');
+const searchInput = document.getElementById('search-input');
 const adminPanel = document.getElementById('admin-panel');
+const adminToggleBtn = document.getElementById('admin-toggle-btn');
+const addProductBtn = document.getElementById('add-product-btn');
 
-let productsCache = []; // Cache to hold fetched products for filtering
+// Show/hide admin panel
+adminToggleBtn.addEventListener('click', () => {
+  if(adminPanel.style.display === 'block'){
+    adminPanel.style.display = 'none';
+  } else {
+    adminPanel.style.display = 'block';
+  }
+});
 
-// Load products from Firestore
-function loadProducts() {
-  db.collection("products").get()
-    .then(snapshot => {
-      productsCache = [];
-      productGrid.innerHTML = "";
-      snapshot.forEach(doc => {
-        const product = doc.data();
-        product.id = doc.id;
-        productsCache.push(product);
-      });
-      displayProducts(productsCache);
-    })
-    .catch(err => {
-      console.error("Error loading products:", err);
-      productGrid.innerHTML = "<p>Error loading products. Please try again later.</p>";
-    });
-}
+// Load products from Firestore and display
+async function loadProducts(filter = "") {
+  productGrid.innerHTML = "<p>Loading products...</p>";
+  const productsCol = collection(db, 'products');
+  const productSnapshot = await getDocs(productsCol);
+  let products = productSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-// Display products in grid
-function displayProducts(products) {
-  productGrid.innerHTML = "";
-  if (products.length === 0) {
+  if(filter.trim() !== ""){
+    products = products.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()));
+  }
+
+  if(products.length === 0){
     productGrid.innerHTML = "<p>No products found.</p>";
     return;
   }
+
+  productGrid.innerHTML = "";
   products.forEach(product => {
     productGrid.innerHTML += `
       <div class="product">
         <img src="${product.image}" alt="${product.name}" />
         <h3>${product.name}</h3>
-        <p>₹${product.price}</p>
+        <p>₹${product.price.toFixed(2)}</p>
         <button onclick="addToCart('${product.id}')">Add to Cart</button>
       </div>
     `;
   });
 }
 
-// Filter products on search
-function filterProducts() {
-  const query = searchInput.value.toLowerCase();
-  const filtered = productsCache.filter(p => p.name.toLowerCase().includes(query));
-  displayProducts(filtered);
-}
+// Search input event
+searchInput.addEventListener('input', (e) => {
+  loadProducts(e.target.value);
+});
 
-// Toggle admin panel
-function toggleAdminPanel() {
-  if (adminPanel.style.display === "none" || adminPanel.style.display === "") {
-    adminPanel.style.display = "block";
-  } else {
-    adminPanel.style.display ="none";
-  }
-}
+// Add new product from admin panel
+addProductBtn.addEventListener('click', async () => {
+  const nameInput = document.getElementById('admin-product-name');
+  const priceInput = document.getElementById('admin-product-price');
+  const imageInput = document.getElementById('admin-product-image');
 
-// Add product from admin panel to Firestore
-function addProduct() {
-  const name = document.getElementById('admin-product-name').value.trim();
-  const price = parseFloat(document.getElementById('admin-product-price').value);
-  const image = document.getElementById('admin-product-image').value.trim();
+  const name = nameInput.value.trim();
+  const price = parseFloat(priceInput.value);
+  const image = imageInput.value.trim();
 
-  if (!name || !price || !image) {
+  if(!name || isNaN(price) || !image){
     alert("Please fill all product fields correctly.");
     return;
   }
 
-  db.collection("products").add({
-    name: name,
-    price: price,
-    image: image
-  })
-  .then(() => {
+  try {
+    await addDoc(collection(db, 'products'), { name, price, image });
     alert("Product added successfully!");
-    // Clear inputs
-    document.getElementById('admin-product-name').value = "";
-    document.getElementById('admin-product-price').value = "";
-    document.getElementById('admin-product-image').value = "";
-    // Reload products list
+    nameInput.value = "";
+    priceInput.value = "";
+    imageInput.value = "";
     loadProducts();
-  })
-  .catch(error => {
+  } catch (error) {
     console.error("Error adding product: ", error);
     alert("Failed to add product. Try again.");
-  });
+  }
+});
+
+// Dummy add to cart function
+window.addToCart = function(productId){
+  alert("Product added to cart! (ID: " + productId + ")");
+  // Extend here for real cart functionality later
 }
 
-// Dummy add to cart button functionality (can be expanded)
-function addToCart(productId) {
-  alert("Product added to cart (ID: " + productId + ")");
-  // You can extend this to implement full cart functionality later
+// Load products initially
+window.onload = () => {
+  loadProducts();
 }
-
-// Load products on page load
-window.onload = loadProducts;
