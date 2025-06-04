@@ -3,36 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SnitchMart</title>
+  <title>SnitchMart - Premium Deals</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="logo.png" />
 </head>
 <body>
   <header>
-    <div class="logo">
-      <img src="logo.png" alt="SnitchMart Logo" />
+    <div class="header-left">
+      <img src="logo.png" alt="SnitchMart Logo" class="logo" />
       <h1>SnitchMart</h1>
     </div>
-    <nav>
-      <input type="text" placeholder="Search for products..." id="searchInput" />
-    </nav>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search Puma, Nike, Shoes, Deals..." />
+    </div>
+    <div class="header-right">
+      <button class="cart-btn">🛒 Cart</button>
+    </div>
   </header>
 
-  <section class="banner">
-    <h2>🔥 Mega Deals on Top Brands! Limited Time Offers! 🔥</h2>
+  <section class="hero">
+    <h2>🔥 Flash Sale: Up to 60% OFF on Top Brands! 🔥</h2>
   </section>
 
   <main>
-    <section class="product-list" id="productList">
-      <p class="loading">Loading products...</p>
+    <section class="categories">
+      <button>Shoes</button>
+      <button>Men</button>
+      <button>Women</button>
+      <button>Accessories</button>
+      <button>Offers</button>
+    </section>
+
+    <section class="product-grid" id="productList">
+      <p class="loading">Loading best deals...</p>
     </section>
   </main>
 
   <footer>
-    <p>© 2025 SnitchMart • Powered by MidowTech</p>
+    <p>© 2025 SnitchMart • Built by MidowTech</p>
   </footer>
 
   <script type="module" src="firebaseConfig.js"></script>
   <script type="module" src="app.js"></script>
 </body>
-</html>
+  </html>
