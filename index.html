@@ -3,63 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SnitchMart - Products</title>
-  <link rel="stylesheet" href="style.css">
+  <title>SnitchMart</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="firebaseConfig.js"></script>
 </head>
 <body>
   <header>
-    <img src="logo.png" alt="SnitchMart Logo" style="height: 60px;">
-    <h1>SnitchMart</h1>
+    <h1>🛒 SnitchMart</h1>
   </header>
 
   <main>
-    <h2>Latest Products</h2>
-    <div id="products" class="product-container"></div>
+    <div id="products-container" class="products-grid">Loading...</div>
   </main>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { firebaseConfig } from './firebaseConfig.js';
 
-  <script>
-    // Firebase config
-    const firebaseConfig = {
-      apiKey: "AIzaSyD-QxJDh8QU2aI8c2kpfTZBNemyvmjq1LE",
-      authDomain: "snitchmart-a8073.firebaseapp.com",
-      projectId: "snitchmart-a8073",
-      storageBucket: "snitchmart-a8073.appspot.com",
-      messagingSenderId: "381112072944",
-      appId: "1:381112072944:web:36f7e3269a847a942da035",
-      measurementId: "G-Y4LS8V8SLL"
-    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    const container = document.getElementById("products-container");
 
-    const productsDiv = document.getElementById("products");
+    async function loadProducts() {
+      try {
+        const querySnapshot = await getDocs(collection(db, "products"));
+        container.innerHTML = ""; // Clear loading...
 
-    db.collection("products").onSnapshot(snapshot => {
-      const products = snapshot.docs.map(doc => doc.data());
-
-      if (products.length === 0) {
-        productsDiv.innerHTML = "<p>No products found.</p>";
-        return;
+        if (querySnapshot.empty) {
+          container.innerHTML = "<p>No products found.</p>";
+        } else {
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const productCard = `
+              <div class="product-card">
+                <img src="${data.image}" alt="${data.name}" />
+                <h2>${data.name}</h2>
+                <p>₹${data.price}</p>
+              </div>
+            `;
+            container.innerHTML += productCard;
+          });
+        }
+      } catch (err) {
+        container.innerHTML = "<p>Error loading products.</p>";
+        console.error("Error:", err);
       }
+    }
 
-      productsDiv.innerHTML = products.map(p => `
-        <div class="product-card">
-          <img src="${p.image}" alt="${p.name}">
-          <h3>${p.name}</h3>
-          <p>₹${p.price}</p>
-          <p>${p.description}</p>
-          <small>Category: ${p.category}</small>
-          <a href="https://wa.me/918000000000?text=Hi%2C%20I%20want%20to%20buy%20${encodeURIComponent(p.name)}" target="_blank">
-            <button>Order on WhatsApp</button>
-          </a>
-        </div>
-      `).join('');
-    });
+    loadProducts();
   </script>
 </body>
 </html>
