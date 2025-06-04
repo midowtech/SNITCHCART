@@ -13,83 +13,88 @@ const firebaseConfig = {
   measurementId: "G-Y4LS8V8SLL"
 };
 
+// Init Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// DOM elements
 const productGrid = document.getElementById('product-grid');
 const searchInput = document.getElementById('search-input');
 const adminPanel = document.getElementById('admin-panel');
 const adminToggleBtn = document.getElementById('admin-toggle-btn');
 const addProductBtn = document.getElementById('add-product-btn');
 
+// Toggle admin panel
 adminToggleBtn.addEventListener('click', () => {
   adminPanel.style.display = adminPanel.style.display === 'block' ? 'none' : 'block';
 });
 
+// Load products
 async function loadProducts(filter = "") {
-  productGrid.innerHTML = "<p>Loading products...</p>";
-  const productsCol = collection(db, 'products');
-  const productSnapshot = await getDocs(productsCol);
-  let products = productSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  productGrid.innerHTML = "<p>Loading...</p>";
+  try {
+    const productsCol = collection(db, 'products');
+    const snapshot = await getDocs(productsCol);
+    let products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-  if (filter.trim() !== "") {
-    products = products.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()));
+    if(filter.trim() !== ""){
+      products = products.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()));
+    }
+
+    if(products.length === 0){
+      productGrid.innerHTML = "<p>No products found.</p>";
+      return;
+    }
+
+    productGrid.innerHTML = "";
+    products.forEach(product => {
+      productGrid.innerHTML += `
+        <div class="product">
+          <img src="${product.image}" alt="${product.name}" />
+          <h3>${product.name}</h3>
+          <p>₹${product.price.toFixed(2)}</p>
+          <button onclick="addToCart('${product.id}')">Add to Cart</button>
+        </div>
+      `;
+    });
+  } catch (err) {
+    productGrid.innerHTML = "<p>Error loading products.</p>";
+    console.error(err);
   }
-
-  if (products.length === 0) {
-    productGrid.innerHTML = "<p>No products found.</p>";
-    return;
-  }
-
-  productGrid.innerHTML = "";
-  products.forEach(product => {
-    productGrid.innerHTML += `
-      <div class="product">
-        <img src="${product.image}" alt="${product.name}" />
-        <h3>${product.name}</h3>
-        <p>₹${product.price.toFixed(2)}</p>
-        <button onclick="addToCart('${product.id}')">Add to Cart</button>
-      </div>
-    `;
-  });
 }
 
+// Search input
 searchInput.addEventListener('input', (e) => {
   loadProducts(e.target.value);
 });
 
+// Add product (admin)
 addProductBtn.addEventListener('click', async () => {
-  const nameInput = document.getElementById('admin-product-name');
-  const priceInput = document.getElementById('admin-product-price');
-  const imageInput = document.getElementById('admin-product-image');
+  const name = document.getElementById('admin-product-name').value.trim();
+  const price = parseFloat(document.getElementById('admin-product-price').value);
+  const image = document.getElementById('admin-product-image').value.trim();
 
-  const name = nameInput.value.trim();
-  const price = parseFloat(priceInput.value);
-  const image = imageInput.value.trim();
-
-  if (!name || isNaN(price) || !image) {
-    alert("Please fill all product fields correctly.");
+  if(!name || isNaN(price) || !image){
+    alert("Fill all fields correctly!");
     return;
   }
 
   try {
     await addDoc(collection(db, 'products'), { name, price, image });
-    alert("Product added successfully!");
-    nameInput.value = "";
-    priceInput.value = "";
-    imageInput.value = "";
+    alert("Product added!");
     loadProducts();
-  } catch (error) {
-    console.error("Error adding product: ", error);
-    alert("Failed to add product. Try again.");
+  } catch (err) {
+    alert("Error adding product.");
+    console.error(err);
   }
 });
 
-// Dummy add to cart function
-window.addToCart = function(productId) {
-  alert("Product added to cart! (ID: " + productId + ")");
+// Dummy cart
+window.addToCart = function(id){
+  alert("Product added to cart: " + id);
 };
 
+// Init
 window.onload = () => {
   loadProducts();
 };
