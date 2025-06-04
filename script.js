@@ -1,8 +1,4 @@
-// Firebase imports
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
-
-// Firebase config
+// Firebase config & initialization (YOUR API keys)
 const firebaseConfig = {
   apiKey: "AIzaSyD-QxJDh8QU2aI8c2kpfTZBNemyvmjq1LE",
   authDomain: "snitchmart-a8073.firebaseapp.com",
@@ -13,88 +9,63 @@ const firebaseConfig = {
   measurementId: "G-Y4LS8V8SLL"
 };
 
-// Init Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-// DOM elements
 const productGrid = document.getElementById('product-grid');
-const searchInput = document.getElementById('search-input');
+const searchInput = document.getElementById('searchInput');
 const adminPanel = document.getElementById('admin-panel');
-const adminToggleBtn = document.getElementById('admin-toggle-btn');
-const addProductBtn = document.getElementById('add-product-btn');
 
-// Toggle admin panel
-adminToggleBtn.addEventListener('click', () => {
-  adminPanel.style.display = adminPanel.style.display === 'block' ? 'none' : 'block';
-});
+let productsCache = []; // Cache to hold fetched products for filtering
 
-// Load products
-async function loadProducts(filter = "") {
-  productGrid.innerHTML = "<p>Loading...</p>";
-  try {
-    const productsCol = collection(db, 'products');
-    const snapshot = await getDocs(productsCol);
-    let products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-    if(filter.trim() !== ""){
-      products = products.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()));
-    }
-
-    if(products.length === 0){
-      productGrid.innerHTML = "<p>No products found.</p>";
-      return;
-    }
-
-    productGrid.innerHTML = "";
-    products.forEach(product => {
-      productGrid.innerHTML += `
-        <div class="product">
-          <img src="${product.image}" alt="${product.name}" />
-          <h3>${product.name}</h3>
-          <p>₹${product.price.toFixed(2)}</p>
-          <button onclick="addToCart('${product.id}')">Add to Cart</button>
-        </div>
-      `;
+// Load products from Firestore
+function loadProducts() {
+  db.collection("products").get()
+    .then(snapshot => {
+      productsCache = [];
+      productGrid.innerHTML = "";
+      snapshot.forEach(doc => {
+        const product = doc.data();
+        product.id = doc.id;
+        productsCache.push(product);
+      });
+      displayProducts(productsCache);
+    })
+    .catch(err => {
+      console.error("Error loading products:", err);
+      productGrid.innerHTML = "<p>Error loading products. Please try again later.</p>";
     });
-  } catch (err) {
-    productGrid.innerHTML = "<p>Error loading products.</p>";
-    console.error(err);
-  }
 }
 
-// Search input
-searchInput.addEventListener('input', (e) => {
-  loadProducts(e.target.value);
-});
-
-// Add product (admin)
-addProductBtn.addEventListener('click', async () => {
-  const name = document.getElementById('admin-product-name').value.trim();
-  const price = parseFloat(document.getElementById('admin-product-price').value);
-  const image = document.getElementById('admin-product-image').value.trim();
-
-  if(!name || isNaN(price) || !image){
-    alert("Fill all fields correctly!");
+// Display products in grid
+function displayProducts(products) {
+  productGrid.innerHTML = "";
+  if (products.length === 0) {
+    productGrid.innerHTML = "<p>No products found.</p>";
     return;
   }
+  products.forEach(product => {
+    productGrid.innerHTML += `
+      <div class="product">
+        <img src="${product.image}" alt="${product.name}" />
+        <h3>${product.name}</h3>
+        <p>₹${product.price}</p>
+        <button onclick="addToCart('${product.id}')">Add to Cart</button>
+      </div>
+    `;
+  });
+}
 
-  try {
-    await addDoc(collection(db, 'products'), { name, price, image });
-    alert("Product added!");
-    loadProducts();
-  } catch (err) {
-    alert("Error adding product.");
-    console.error(err);
-  }
-});
+// Filter products on search
+function filterProducts() {
+  const query = searchInput.value.toLowerCase();
+  const filtered = productsCache.filter(p => p.name.toLowerCase().includes(query));
+  displayProducts(filtered);
+}
 
-// Dummy cart
-window.addToCart = function(id){
-  alert("Product added to cart: " + id);
-};
-
-// Init
-window.onload = () => {
-  loadProducts();
-};
+// Toggle admin panel
+function toggleAdminPanel() {
+  if (adminPanel.style.display === "none" || adminPanel.style.display === "") {
+    adminPanel.style.display = "block";
+  } else {
+    adminPanel.style.display =
