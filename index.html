@@ -2,58 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SnitchCart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SNITCHCART - Your Online Store</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js"></script>
+  
+  <!-- Style -->
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <div class="logo">SNITCHCART</div>
-    <nav>
-      <input type="text" id="search-input" placeholder="Search products..." />
-      <a href="#">Home</a>
-      <a href="#">Cart</a>
-      <a href="#" onclick="toggleAdmin()">Admin</a>
-    </nav>
-  </header>
+<header>
+  <div class="logo">SNITCHCART</div>
+  <nav>
+    <input id="searchInput" type="text" placeholder="Search products..." />
+    <button onclick="filterProducts()">Search</button>
+    <button onclick="toggleAdminPanel()">Admin Panel</button>
+  </nav>
+</header>
 
-  <!-- Offers Banner -->
-  <div class="offers">🔥 Flat 50% OFF on Firevase & more! Limited time only! 🔥</div>
+<div class="offers">
+  Flat 30% OFF on All Products! Use code: SNITCH30
+</div>
 
-  <!-- Product Grid -->
-  <div class="product-grid"></div>
+<div id="product-grid" class="product-grid">
+  <!-- Products will load here dynamically -->
+</div>
 
-  <!-- Admin Panel (hidden by default) -->
-  <div id="admin-panel" style="display: none;">
-    <h2>Admin Panel</h2>
-    <form id="add-product-form">
-      <input type="text" name="name" placeholder="Product Name" required />
-      <input type="number" name="price" placeholder="Price ₹" required />
-      <input type="text" name="image" placeholder="Image URL" required />
-      <button type="submit">Add Product</button>
-    </form>
-  </div>
+<!-- Admin Panel -->
+<section id="admin-panel" style="display:none;">
+  <h2>Admin Panel - Add Product</h2>
+  <input type="text" id="admin-product-name" placeholder="Product Name" />
+  <input type="number" id="admin-product-price" placeholder="Price (₹)" />
+  <input type="text" id="admin-product-image" placeholder="Image URL" />
+  <button onclick="addProduct()">Add Product</button>
+</section>
 
-  <!-- Footer -->
-  <footer>© 2025 SnitchCart. Built with ❤️ by MidowTech.</footer>
+<footer>
+  &copy; 2025 SNITCHCART. All rights reserved.
+</footer>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics-compat.js"></script>
-
-  <!-- Main Script -->
-  <script src="main.js"></script>
-
-  <!-- Toggle Admin Panel -->
-  <script>
-    function toggleAdmin() {
-      const panel = document.getElementById("admin-panel");
-      panel.style.display = panel.style.display === "none" ? "block" : "none";
-    }
-  </script>
+<script src="script.js"></script>
 </body>
 </html>
