@@ -1,53 +1,47 @@
-// app.js
-import { db, auth } from './firebaseConfig.js';
-import { collection, getDocs, query, where } from "firebase/firestore";
+// Sample product data, add more or fetch from Firebase later
+const products = [
+  {
+    id: "p1",
+    name: "Snitch Sneakers",
+    price: 2999,
+    image: "product1.jpg",
+  },
+  {
+    id: "p2",
+    name: "Snitch Hoodie",
+    price: 1999,
+    image: "product2.jpg",
+  },
+  {
+    id: "p3",
+    name: "Snitch Watch",
+    price: 4999,
+    image: "product3.jpg",
+  },
+  {
+    id: "p4",
+    name: "Snitch Backpack",
+    price: 1499,
+    image: "product4.jpg",
+  },
+];
 
-const productsContainer = document.getElementById('products');
-const searchInput = document.getElementById('searchInput');
-const adminLink = document.getElementById('adminLink');
-
-let productsData = [];
-
-async function fetchProducts() {
-  const productsCol = collection(db, "products");
-  const productsSnapshot = await getDocs(productsCol);
-  productsData = productsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  displayProducts(productsData);
-}
-
-function displayProducts(products) {
-  productsContainer.innerHTML = '';
-  if(products.length === 0) {
-    productsContainer.innerHTML = '<p>No products found</p>';
-    return;
-  }
-  products.forEach(product => {
-    const card = document.createElement('div');
-    card.className = 'product-card';
+function loadProducts() {
+  const productList = document.getElementById("product-list");
+  products.forEach((product) => {
+    const card = document.createElement("div");
+    card.className = "product-card";
 
     card.innerHTML = `
-      <img src="${product.imageURL}" alt="${product.name}" />
-      <div class="product-title">${product.name}</div>
-      <div class="product-price">₹${product.price}</div>
+      <img src="${product.image}" alt="${product.name}" class="product-image" />
+      <h3 class="product-name">${product.name}</h3>
+      <p class="product-price">₹${product.price}</p>
+      <button onclick="alert('Added ${product.name} to cart!')" class="btn-primary">Add to Cart</button>
     `;
 
-    productsContainer.appendChild(card);
+    productList.appendChild(card);
   });
 }
 
-searchInput.addEventListener('input', (e) => {
-  const searchTerm = e.target.value.toLowerCase();
-  const filtered = productsData.filter(p => p.name.toLowerCase().includes(searchTerm));
-  displayProducts(filtered);
-});
-
-fetchProducts();
-
-// Show admin link only if logged in as admin
-auth.onAuthStateChanged(user => {
-  if(user && user.email === 'snitchmart44@gmail.com'){
-    adminLink.style.display = 'inline-block';
-  } else {
-    adminLink.style.display = 'none';
-  }
-});
+// Call the function after DOM loads
+document.addEventListener("DOMContentLoaded", loadProducts);
