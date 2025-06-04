@@ -3,50 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SNITCHCART - Your Online Store</title>
-  
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
-  
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js"></script>
-  
-  <!-- Style -->
+  <title>SNITCX MART - Online Store</title>
   <link rel="stylesheet" href="style.css" />
+  <!-- Firebase -->
+  <script type="module" src="script.js" defer></script>
+  <link rel="icon" href="images/favicon.ico" />
 </head>
 <body>
+  <header>
+    <div class="logo">
+      <img src="images/logo.png" alt="SNITCX MART Logo" height="40" />
+      SNITCX MART
+    </div>
+    <nav>
+      <input id="search-input" type="search" placeholder="Search products..." />
+      <button id="admin-toggle-btn">Admin Panel</button>
+    </nav>
+  </header>
 
-<header>
-  <div class="logo">SNITCHCART</div>
-  <nav>
-    <input id="searchInput" type="text" placeholder="Search products..." />
-    <button onclick="filterProducts()">Search</button>
-    <button onclick="toggleAdminPanel()">Admin Panel</button>
-  </nav>
-</header>
+  <section class="offers">
+    🔥 Hot Deals & Exclusive Offers! 🔥
+  </section>
 
-<div class="offers">
-  Flat 30% OFF on All Products! Use code: SNITCH30
-</div>
+  <main>
+    <div id="product-grid" class="product-grid"></div>
+  </main>
 
-<div id="product-grid" class="product-grid">
-  <!-- Products will load here dynamically -->
-</div>
+  <section id="admin-panel" style="display:none;">
+    <h2>Admin Panel - Add New Product</h2>
+    <input id="admin-product-name" type="text" placeholder="Product Name" />
+    <input id="admin-product-price" type="number" placeholder="Price in ₹" min="0" />
+    <input id="admin-product-image" type="text" placeholder="Image URL" />
+    <button id="add-product-btn">Add Product</button>
+  </section>
 
-<!-- Admin Panel -->
-<section id="admin-panel" style="display:none;">
-  <h2>Admin Panel - Add Product</h2>
-  <input type="text" id="admin-product-name" placeholder="Product Name" />
-  <input type="number" id="admin-product-price" placeholder="Price (₹)" />
-  <input type="text" id="admin-product-image" placeholder="Image URL" />
-  <button onclick="addProduct()">Add Product</button>
-</section>
-
-<footer>
-  &copy; 2025 SNITCHCART. All rights reserved.
-</footer>
-
-<script src="script.js"></script>
+  <footer>
+    &copy; 2025 SNITCX MART | All rights reserved.
+  </footer>
 </body>
 </html>
