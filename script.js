@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
-// Firebase config - apni firebaseConfig object yahan paste karo
+// Firebase config - tera Firebase project config yahan hai
 const firebaseConfig = {
   apiKey: "AIzaSyD-QxJDh8QU2aI8c2kpfTZBNemyvmjq1LE",
   authDomain: "snitchmart-a8073.firebaseapp.com",
