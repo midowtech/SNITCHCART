@@ -2,43 +2,120 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SnitchCart - Shop Your Style</title>
-  <link rel="stylesheet" href="style.css" />
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SNITCHE CART</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #111;
+      color: #fff;
+    }
+
+    header {
+      background-color: #222;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .logo {
+      color: #00ffd5;
+    }
+
+    .container {
+      padding: 1rem;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+    }
+
+    .product-card {
+      background-color: #1a1a1a;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      transition: transform 0.2s ease;
+    }
+
+    .product-card:hover {
+      transform: scale(1.03);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .product-name {
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .price {
+      color: #00ffd5;
+      font-weight: bold;
+      margin-top: 0.25rem;
+    }
+
+    .offer {
+      font-size: 0.8rem;
+      color: #ff4c4c;
+      margin-top: 0.25rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.8rem;
+      color: #777;
+    }
+  </style>
 </head>
 <body>
-
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container header-container">
-      <div class="logo">
-        <img src="logo.png" alt="SnitchCart Logo" />
-        <h1>SnitchCart</h1>
-      </div>
-      <form class="search-bar" id="searchForm">
-        <input type="text" id="searchInput" placeholder="Search for products, brands..." />
-        <button type="submit">🔍</button>
-      </form>
-      <div class="cart-icon" title="Cart">
-        🛒 <span id="cartCount">0</span>
-      </div>
-    </div>
+  <header>
+    <span class="logo">SNITCHE CART</span>
   </header>
 
-  <!-- OFFER BANNER -->
-  <section class="offer-banner">
-    <p>🔥 Summer Sale! Up to 40% OFF on select items. Shop Now!</p>
-  </section>
+  <div class="container">
+    <div class="products">
+      <div class="product-card">
+        <img src="https://via.placeholder.com/300x200.png?text=Puma+Tshirt" alt="Product">
+        <div class="product-name">Puma T-Shirt Black</div>
+        <div class="price">₹999</div>
+        <div class="offer">Flat 20% OFF</div>
+      </div>
 
-  <!-- PRODUCTS GRID -->
-  <main>
-    <section class="products-container" id="productsContainer">
-      <!-- Products loaded by JS -->
-    </section>
-  </main>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/300x200.png?text=Nike+Shoes" alt="Product">
+        <div class="product-name">Nike Sports Shoes</div>
+        <div class="price">₹2999</div>
+        <div class="offer">Save ₹500</div>
+      </div>
 
-  <script src="main.js" type="module"></script>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/300x200.png?text=Amazon+Basics+Bag" alt="Product">
+        <div class="product-name">Amazon Basics Backpack</div>
+        <div class="price">₹799</div>
+        <div class="offer">Extra 10% Cashback</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 SNITCHE CART. All rights reserved.
+  </footer>
 </body>
 </html>
