@@ -34,74 +34,85 @@ adminToggleBtn.addEventListener('click', () => {
 });
 
 // Load products from Firestore and display
-async function loadProducts(filter = "") {
-  productGrid.innerHTML = "<p>Loading products...</p>";
-  const productsCol = collection(db, 'products');
-  const productSnapshot = await getDocs(productsCol);
-  let products = productSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-  if(filter.trim() !== ""){
-    products = products.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()));
+async function loadProducts() {
+  productGrid.innerHTML = 'Loading products...';
+  try {
+    const querySnapshot = await getDocs(collection(db, "products"));
+    const products = [];
+    querySnapshot.forEach((doc) => {
+      products.push({ id: doc.id, ...doc.data() });
+    });
+    displayProducts(products);
+  } catch (error) {
+    productGrid.innerHTML = 'Failed to load products. Try again later.';
+    console.error("Error loading products:", error);
   }
+}
 
-  if(products.length === 0){
-    productGrid.innerHTML = "<p>No products found.</p>";
+// Display products filtered by search
+function displayProducts(products) {
+  const searchTerm = searchInput.value.toLowerCase();
+  const filtered = products.filter(p =>
+    p.name.toLowerCase().includes(searchTerm)
+  );
+
+  if (filtered.length === 0) {
+    productGrid.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:#777;">No products found.</p>';
     return;
   }
 
-  productGrid.innerHTML = "";
-  products.forEach(product => {
-    productGrid.innerHTML += `
-      <div class="product">
-        <img src="${product.image}" alt="${product.name}" />
-        <h3>${product.name}</h3>
-        <p>₹${product.price.toFixed(2)}</p>
-        <button onclick="addToCart('${product.id}')">Add to Cart</button>
-      </div>
+  productGrid.innerHTML = '';
+  filtered.forEach(product => {
+    const productElem = document.createElement('div');
+    productElem.className = 'product';
+    productElem.innerHTML = `
+      <img src="${product.image || 'images/placeholder.png'}" alt="${product.name}" />
+      <h3>${product.name}</h3>
+      <p>₹${product.price.toFixed(2)}</p>
+      <button onclick="addToCart('${product.id}', '${product.name}')">Add to Cart</button>
     `;
+    productGrid.appendChild(productElem);
   });
 }
 
-// Search input event
-searchInput.addEventListener('input', (e) => {
-  loadProducts(e.target.value);
-});
+// Add product to cart (basic alert for demo)
+window.addToCart = function(id, name) {
+  alert(`Added "${name}" to cart! (Feature coming soon)`);
+}
 
-// Add new product from admin panel
+// Add new product (Admin panel)
 addProductBtn.addEventListener('click', async () => {
-  const nameInput = document.getElementById('admin-product-name');
-  const priceInput = document.getElementById('admin-product-price');
-  const imageInput = document.getElementById('admin-product-image');
+  const name = document.getElementById('admin-product-name').value.trim();
+  const price = parseFloat(document.getElementById('admin-product-price').value);
+  const image = document.getElementById('admin-product-image').value.trim();
 
-  const name = nameInput.value.trim();
-  const price = parseFloat(priceInput.value);
-  const image = imageInput.value.trim();
-
-  if(!name || isNaN(price) || !image){
-    alert("Please fill all product fields correctly.");
+  if (!name || isNaN(price) || price <= 0) {
+    alert('Please enter valid product name and price.');
     return;
   }
 
   try {
-    await addDoc(collection(db, 'products'), { name, price, image });
-    alert("Product added successfully!");
-    nameInput.value = "";
-    priceInput.value = "";
-    imageInput.value = "";
+    await addDoc(collection(db, "products"), {
+      name,
+      price,
+      image: image || ''
+    });
+    alert('Product added successfully!');
+    // Clear inputs
+    document.getElementById('admin-product-name').value = '';
+    document.getElementById('admin-product-price').value = '';
+    document.getElementById('admin-product-image').value = '';
     loadProducts();
   } catch (error) {
-    console.error("Error adding product: ", error);
-    alert("Failed to add product. Try again.");
+    alert('Failed to add product. Try again.');
+    console.error("Add product error:", error);
   }
 });
 
-// Dummy add to cart function
-window.addToCart = function(productId){
-  alert("Product added to cart! (ID: " + productId + ")");
-  // Extend here for real cart functionality later
-}
-
-// Load products initially
-window.onload = () => {
+// Search products live
+searchInput.addEventListener('input', () => {
   loadProducts();
-}
+});
+
+// Initial load
+loadProducts();
